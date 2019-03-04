@@ -1,25 +1,30 @@
+let turn = 1
+
 document.addEventListener('DOMContentLoaded', init)
 const getBoard = () =>  document.getElementById('game-board')
 
 function init() {
-  getTerritories()
-
+  // getTerritories()
+  renderGameBoard()
+  document.getElementById('end-btn').addEventListener('click', endTurn)
 }
 
 function getTerritories() {
-  fetch('http://localhost:3000/territories')
-  .then(res => res.json())
-  .then(json => renderGameBoard(json))
+  return fetch('http://localhost:3000/territories')
+  // .then(res => res.json())
+  // .then(json => renderGameBoard(json))
 }
 
 // function returnTerritories() {
 //
 // }
 
-function renderGameBoard(territories) {
+function renderGameBoard() {
   getBoard().innerHTML = ''
-  // debugger
-  territories.forEach(renderTerritory)
+  getTerritories()
+  .then(res => res.json())
+  .then(ter => ter.forEach(renderTerritory))
+  // territories.forEach(renderTerritory)
 }
 
 function renderTerritory(ter) {
@@ -38,6 +43,7 @@ function renderTerritory(ter) {
   terDiv.appendChild(powerEl)
   powerEl.innerText = `Power: ${ter.power} `
 
+  if (ter.player_id === turn) {
   minusBtn = document.createElement('button')
   terDiv.appendChild(minusBtn)
   minusBtn.innerText = '-'
@@ -52,16 +58,6 @@ function renderTerritory(ter) {
   terDiv.appendChild(activeBtn)
   activeBtn.innerText = 'Choose Territory'
 
-  // if (ter.inRange) {
-  //   terDiv.appendChild(document.createElement('br'))
-  //   attackBtn = document.createElement('button')
-  //   terDiv.appendChild(attackBtn)
-  //   attackBtn.innerText = 'Attack!'
-  //   attackBtn.addEventListener('click', () => {attackTerritory(activeTerritory(), ter)})
-  // }
-
-  fillTerColor(ter)
-
   minusBtn.addEventListener('click', ()=> {
     let p = document.querySelector(`#power-${ter.id}`)
     p.innerText = `Power: ${ter.power - 1}`
@@ -75,6 +71,18 @@ function renderTerritory(ter) {
   })
 
   activeBtn.addEventListener('click', ()=> {selectTer(ter)})
+  }
+
+  // if (ter.inRange) {
+  //   terDiv.appendChild(document.createElement('br'))
+  //   attackBtn = document.createElement('button')
+  //   terDiv.appendChild(attackBtn)
+  //   attackBtn.innerText = 'Attack!'
+  //   attackBtn.addEventListener('click', () => {attackTerritory(activeTerritory(), ter)})
+  // }
+
+  fillTerColor(ter)
+
 }
 
 function fillTerColor(ter) {
@@ -96,6 +104,12 @@ function updatePower(territory, change) {
     },
     body: JSON.stringify({power: territory.power += change})
   })
+}
+
+function endTurn() {
+  turn === 1 ? turn = 2 : turn = 1
+  document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
+  renderGameBoard()
 }
 
 /// conditionally render buttons (set turn variable, add end turn btn)
