@@ -12,8 +12,8 @@ function init() {
 
 function getTerritories() {
   return fetch('http://localhost:3000/territories')
-  // .then(res => res.json())
-  // .then(json => renderGameBoard(json))
+  .then(res => res.json())
+  .then(json => renderGameBoard(json))
 }
 
 function renderGameBoard(territories) {
@@ -125,7 +125,7 @@ function updatePower(territory, change) {
 function endTurn() {
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
-  renderGameBoard()
+  getTerritories()
 }
 
 /// conditionally render buttons (set turn variable, add end turn btn)
