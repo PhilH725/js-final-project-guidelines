@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', init)
 const getBoard = () =>  document.getElementById('game-board')
+let powerStore = 0
 
 function init() {
   getTerritories()
-
+  setTextBox()
 }
 
 function getTerritories() {
@@ -12,13 +13,8 @@ function getTerritories() {
   .then(json => renderGameBoard(json))
 }
 
-// function returnTerritories() {
-//
-// }
-
 function renderGameBoard(territories) {
   getBoard().innerHTML = ''
-  // debugger
   territories.forEach(renderTerritory)
 }
 
@@ -63,18 +59,40 @@ function renderTerritory(ter) {
   fillTerColor(ter)
 
   minusBtn.addEventListener('click', ()=> {
-    let p = document.querySelector(`#power-${ter.id}`)
-    p.innerText = `Power: ${ter.power - 1}`
-    updatePower(ter, -1)
+    if (ter.power > 0) {
+      setPowerBar(ter, -1)
+      updatePower(ter, -1)
+      powerStore++
+      setTextBox()
+    }
   })
 
   plusBtn.addEventListener('click', ()=> {
-    let p = document.querySelector(`#power-${ter.id}`)
-    p.innerText = `Power: ${ter.power + 1}`
-    updatePower(ter, 1)
+    if (powerStore > 0) {
+      setPowerBar(ter, 1)
+      updatePower(ter, 1)
+      powerStore--
+      setTextBox()
+    }
   })
 
   activeBtn.addEventListener('click', ()=> {selectTer(ter)})
+}
+
+function powerBar(ter) {
+  return document.querySelector(`#power-${ter.id}`)
+}
+
+function setPowerBar(ter, num) {
+  powerBar(ter).textContent = `Power: ${ter.power + num}`
+}
+
+function textBox() {
+  return document.querySelector("#text-box")
+}
+
+function setTextBox() {
+  textBox().textContent = `Available troops: ${powerStore}`
 }
 
 function fillTerColor(ter) {
