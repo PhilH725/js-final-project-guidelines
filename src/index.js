@@ -1,26 +1,36 @@
+// declare/set global variables
 let turn = 1
-
-document.addEventListener('DOMContentLoaded', init)
-const getBoard = () =>  document.getElementById('game-board')
 let powerStore = 0
+
+// retrieve page elements
+const getBoard = () =>  document.getElementById('game-board')
+const powerBar = (ter) => document.querySelector(`#power-${ter.id}`)
+const textBox = () => document.querySelector("#text-box")
+const endButton = () => document.getElementById('end-btn')
+
+// initialize page when content loads
+document.addEventListener('DOMContentLoaded', init)
 
 function init() {
   getTerritories()
-  document.getElementById('end-btn').addEventListener('click', endTurn)
+  endButton().addEventListener('click', endTurn)
   setTextBox()
 }
 
+// fetch territories from db
 function getTerritories() {
   return fetch('http://localhost:3000/territories')
   .then(res => res.json())
   .then(json => renderGameBoard(json))
 }
 
+// iterate through territories to create game board
 function renderGameBoard(territories) {
   getBoard().innerHTML = ''
   territories.forEach(renderTerritory)
 }
 
+// render each territory
 function renderTerritory(ter) {
 
   terDiv = document.createElement('div')
@@ -54,63 +64,24 @@ function renderTerritory(ter) {
 
   minusBtn.addEventListener('click', ()=> {
     if (ter.power > 0) {
-      setPowerBar(ter, -1)
-      updatePower(ter, -1)
-      powerStore++
-      setTextBox()
+      alterPower(ter, -1)
     }
   })
 
   plusBtn.addEventListener('click', ()=> {
     if (powerStore > 0) {
-      setPowerBar(ter, 1)
-      updatePower(ter, 1)
-      powerStore--
-      setTextBox()
+      alterPower(ter, 1)
     }
   })
 
   activeBtn.addEventListener('click', ()=> {selectTer(ter)})
   }
 
-  // if (ter.inRange) {
-  //   terDiv.appendChild(document.createElement('br'))
-  //   attackBtn = document.createElement('button')
-  //   terDiv.appendChild(attackBtn)
-  //   attackBtn.innerText = 'Attack!'
-  //   attackBtn.addEventListener('click', () => {attackTerritory(activeTerritory(), ter)})
-  // }
-
   fillTerColor(ter)
 
 }
 
-function powerBar(ter) {
-  return document.querySelector(`#power-${ter.id}`)
-}
-
-function setPowerBar(ter, num) {
-  powerBar(ter).textContent = `Power: ${ter.power + num}`
-}
-
-function textBox() {
-  return document.querySelector("#text-box")
-}
-
-function setTextBox() {
-  textBox().textContent = `Available troops: ${powerStore}`
-}
-
-function fillTerColor(ter) {
-
-  if (ter.active) {
-    terDiv.style.backgroundColor = 'purple'
-  } else {
-  ter.player_id === 1 ? terDiv.style.backgroundColor = 'lightblue' : terDiv.style.backgroundColor = 'red'
-  }
-
-}
-
+// Set/reset territory's power
 function updatePower(territory, change) {
   fetch(`http://localhost:3000/territories/${territory.id}`, {
     method: "PATCH",
@@ -122,6 +93,33 @@ function updatePower(territory, change) {
   })
 }
 
+function alterPower(ter, num) {
+  setPowerBar(ter, num)
+  updatePower(ter, num)
+  powerStore = powerStore + (-num)
+  setTextBox()
+}
+
+function setPowerBar(ter, num) {
+  powerBar(ter).textContent = `Power: ${ter.power + num}`
+}
+
+function setTextBox() {
+  textBox().textContent = `Available troops: ${powerStore}`
+}
+
+// Change background based on active
+function fillTerColor(ter) {
+
+  if (ter.active) {
+    terDiv.style.backgroundColor = 'purple'
+  } else {
+  ter.player_id === 1 ? terDiv.style.backgroundColor = 'lightblue' : terDiv.style.backgroundColor = 'red'
+  }
+
+}
+
+// Change turn state
 function endTurn() {
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
