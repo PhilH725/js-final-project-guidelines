@@ -6,7 +6,7 @@
 #game-board {
   display: grid;
   justify-content: flex-start;
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(4, 260px);
   grid-template-rows: auto auto;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
