@@ -31,6 +31,18 @@ function createTerritory() {
       allTerritories = []
     }
 
+    static resetPower() {
+      this.all().forEach(t => t.power = 5)
+    }
+
+    static randomizePlayers() {
+      let arr = shuffle([1,1,1,1,1,1,2,2,2,2,2,2])
+      for (const index in arr) {
+        let ter = Territory.find(parseInt(index) + 1)
+        ter.player_id = arr[index]
+      }
+    }
+
     static updateAll() {
       let ta = Territory.all()
       fetch('http://localhost:3000/update/territories', {
@@ -54,10 +66,6 @@ function createTerritory() {
 
     findAllEnemies() {
       return Territory.all().filter(ter => ter.player_id != this.player_id)
-    }
-
-    findEnemyNeighbors() {
-
     }
 
     attack(targ) {

@@ -11,6 +11,7 @@ const endButton = () => document.getElementById('end-btn')
 const territoryDiv = (ter) => document.querySelector(`#territory-${ter.id}`)
 const neighborDiv = (ter) => document.querySelector(`#territory-${ter.base_id}`)
 const divById = (id) => document.querySelector(`#territory-${id}`)
+const newGameButton = () => document.getElementById('new-game')
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -20,6 +21,7 @@ function init() {
   endButton().addEventListener('click', endTurn)
   setTextBox()
   getBoard().addEventListener('click', handleBoardClick)
+  newGameButton().addEventListener('click', startNewGame)
 }
 
 function handleBoardClick(e) {
@@ -191,6 +193,25 @@ function endTurn() {
 
   Territory.updateAll()
 }
+
+// Start new game
+function startNewGame() {
+  Territory.resetPower()
+  Territory.randomizePlayers()
+  Territory.updateAll()
+}
+
+function shuffle(array) {
+  var l = array.length, t, i;
+  while (l) {
+    i = Math.floor(Math.random() * l--);
+    t = array[l];
+    array[l] = array[i];
+    array[i] = t;
+  }
+  return array;
+}
+
 
 // fetch('http://localhost:3000/territories/2', {
 //   method: "PATCH",
