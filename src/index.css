@@ -35,3 +35,7 @@
   /* border-style: solid;
   border-width: 2px; */
 }
+
+#map-div {
+  background-color: lightgray;
+}
