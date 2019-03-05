@@ -130,18 +130,15 @@ function setTextBox() {
 
 // Change active territory
 function selectTerritory(ter) {
-  // activeTerritory === ter ? activeTerritory = null : activeTerritory = ter
   if (activeTerritory === ter) {
     activeTerritory = null
     ter.neighbors.forEach(n => {
-      // neighborDiv(n).style.border = "5px solid black"
       defaultBorder(n.base_id)
     })
   } else {
     activeTerritory = ter
     ter.neighbors.forEach(n => {
       if (Territory.find(n.base_id).player_id != ter.player_id) {
-        // neighborDiv(n).style.border = "5px solid orange"
         attackBorder(n.base_id)
       }
     })
