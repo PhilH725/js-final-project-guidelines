@@ -22,9 +22,11 @@ function handleBoardClick(e) {
   if (e.target && e.target.className === "territory") {
     let ter = Territory.find(e.target.id.slice(10))
     if (ter.player_id == turn) {
-      if (!Territory.anyActiveTerritories() || ter.active == true) {
+      if (!Territory.findActiveTerritory() || ter.active == true) {
         selectTerritory(ter)
       }
+    } else if (ter.player_id != turn && Territory.findActiveTerritory().hasNeighborX(ter.id)) {
+      Territory.findActiveTerritory().attack(ter)
     }
   } else if (e.target && e.target.nodeName === "BUTTON"){
     let ter = Territory.find(e.target.parentElement.id.slice(10))
@@ -130,9 +132,8 @@ function selectTerritory(ter) {
      "Accept": "application/json"
    },
    body: JSON.stringify({active: ter.active})
- })
- console.log(`territory ${ter.id} active: ${ter.active}`)
- fillTerColor(ter)
+ }).then(res => res.json())
+ .then(ter => fillTerColor(ter))
 }
 
 function fillTerColor(ter) {
@@ -150,7 +151,37 @@ function fillTerColor(ter) {
 function endTurn() {
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
-  getTerritories()
+
+  let ter = Territory.findActiveTerritory()
+  if (ter) {
+    ter.active = !ter.active
+    fetch(`http://localhost:3000/territories/${ter.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({active: ter.active})
+    }).then(res => res.json())
+    .then(ter => {
+      fillTerColor(ter)
+      Territory.removeAll()
+      getTerritories()
+    })
+  } else {
+    getTerritories()
+  }
+  // if (Territory.findActiveTerritory()) {
+  //
+  //   var p = new Promise((resolve, reject) => resolve(selectTerritory(Territory.findActiveTerritory())))
+  //   p.then(Territory.removeAll()).then(getTerritories()).then(console.log(`after promise: ${Territory.findActiveTerritory()}`))
+  //   // selectTerritory(Territory.findActiveTerritory())
+  // } else {
+  //   getTerritories()
+  // }
+  // console.log(`after get ter: ${Territory.findActiveTerritory()}`)
+  // Territory.removeAll()
+  // getTerritories()
 }
 
 /// conditionally render buttons (set turn variable, add end turn btn)
