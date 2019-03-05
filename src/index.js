@@ -1,12 +1,14 @@
 // declare/set global variables
 let turn = 1
 let powerStore = 0
+let activeTerritory
 
 // retrieve page elements
 const getBoard = () =>  document.getElementById('game-board')
 const powerBar = (ter) => document.querySelector(`#power-${ter.id}`)
 const textBox = () => document.querySelector("#text-box")
 const endButton = () => document.getElementById('end-btn')
+const territoryDiv = (ter) => document.querySelector(`#territory-${ter.id}`)
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -22,11 +24,11 @@ function handleBoardClick(e) {
   if (e.target && e.target.className === "territory") {
     let ter = Territory.find(e.target.id.slice(10))
     if (ter.player_id == turn) {
-      if (!Territory.findActiveTerritory() || ter.active == true) {
+      if (!activeTerritory || activeTerritory === ter) {
         selectTerritory(ter)
       }
-    } else if (ter.player_id != turn && Territory.findActiveTerritory().hasNeighborX(ter.id)) {
-      Territory.findActiveTerritory().attack(ter)
+    } else if (ter.player_id != turn && activeTerritory.hasNeighborX(ter.id)) {
+      activeTerritory.attack(ter)
     }
   } else if (e.target && e.target.nodeName === "BUTTON"){
     let ter = Territory.find(e.target.parentElement.id.slice(10))
@@ -96,26 +98,26 @@ function renderTerritory(ter) {
 }
 
 // Set/reset territory's power
-function updatePower(territory, change) {
-  fetch(`http://localhost:3000/territories/${territory.id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({power: territory.power += change})
-  })
-}
+// function updatePower(territory, change) {
+//   fetch(`http://localhost:3000/territories/${territory.id}`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Accept": "application/json"
+//     },
+//     body: JSON.stringify({power: territory.power += change})
+//   })
+// }
 
 function alterPower(ter, num) {
-  setPowerBar(ter, num)
-  updatePower(ter, num)
+  ter.power = ter.power + (num)
+  setPowerBar(ter)
   powerStore = powerStore + (-num)
   setTextBox()
 }
 
-function setPowerBar(ter, num) {
-  powerBar(ter).textContent = `Power: ${ter.power + num}`
+function setPowerBar(ter) {
+  powerBar(ter).textContent = `Power: ${ter.power}`
 }
 
 function setTextBox() {
@@ -124,65 +126,57 @@ function setTextBox() {
 
 // Change active territory
 function selectTerritory(ter) {
- ter.active = !ter.active
- fetch(`http://localhost:3000/territories/${ter.id}`, {
-   method: "PATCH",
-   headers: {
-     "Content-Type": "application/json",
-     "Accept": "application/json"
-   },
-   body: JSON.stringify({active: ter.active})
- }).then(res => res.json())
- .then(ter => fillTerColor(ter))
+  activeTerritory === ter ? activeTerritory = null : activeTerritory = ter
+  fillTerColor(ter)
 }
 
 function fillTerColor(ter) {
   let terDiv = document.querySelector(`#territory-${ter.id}`)
 
-  if (ter.active) {
+  if (activeTerritory === ter) {
     terDiv.style.backgroundColor = 'purple'
   } else {
   ter.player_id === 1 ? terDiv.style.backgroundColor = 'lightblue' : terDiv.style.backgroundColor = 'red'
   }
-
 }
+
+//
+function addTerritoryButtons(ter) {
+  minusBtn = document.createElement('button')
+  territoryDiv(ter).appendChild(minusBtn)
+  minusBtn.innerText = '-'
+
+  plusBtn = document.createElement('button')
+  territoryDiv(ter).appendChild(plusBtn)
+  plusBtn.innerText = '+'
+}
+
+// function removeTerritoryButtons(ter) {
+//   territoryDiv(ter).children.
+// }
 
 // Change turn state
 function endTurn() {
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
 
-  let ter = Territory.findActiveTerritory()
-  if (ter) {
-    ter.active = !ter.active
-    fetch(`http://localhost:3000/territories/${ter.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({active: ter.active})
-    }).then(res => res.json())
-    .then(ter => {
-      fillTerColor(ter)
-      Territory.removeAll()
-      getTerritories()
-    })
-  } else {
-    getTerritories()
+  if (activeTerritory) {
+    activeTerritory = null
   }
-  // if (Territory.findActiveTerritory()) {
-  //
-  //   var p = new Promise((resolve, reject) => resolve(selectTerritory(Territory.findActiveTerritory())))
-  //   p.then(Territory.removeAll()).then(getTerritories()).then(console.log(`after promise: ${Territory.findActiveTerritory()}`))
-  //   // selectTerritory(Territory.findActiveTerritory())
-  // } else {
-  //   getTerritories()
-  // }
-  // console.log(`after get ter: ${Territory.findActiveTerritory()}`)
-  // Territory.removeAll()
-  // getTerritories()
+
+  Territory.updateAll()
 }
+
+// fetch('http://localhost:3000/territories/2', {
+//   method: "PATCH",
+//   headers: {
+//     "Content-Type": "application/json",
+//     "Accept": "application/json"
+//   },
+//   body: JSON.stringify({
+//     player_id: 2
+//   })
+// })
 
 /// conditionally render buttons (set turn variable, add end turn btn)
 /// cap power allocation

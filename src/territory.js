@@ -31,6 +31,35 @@ function createTerritory() {
       allTerritories = []
     }
 
+    // static updateAll() {
+    //   this.all().forEach (ter => {
+    //     fetch(`http://localhost:3000/territories/${ter.id}`, {
+    //       method: "PATCH",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         "Accept": "application/json"
+    //       },
+    //       body: JSON.stringify({
+    //         player_id: ter.player_id,
+    //         power: ter.power
+    //       })
+    //     })
+    //   })
+    // }
+
+    static updateAll() {
+      let ta = Territory.all()
+      fetch('http://localhost:3000/update/territories', {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ta})
+      }).then(res => res.json())
+      .then(json => renderGameBoard(json))
+    }
+
     hasNeighborX(id) {
       return this.neighbors.find(neighbor => neighbor.base_id == id)
     }
@@ -40,27 +69,19 @@ function createTerritory() {
         targ.player_id = this.player_id
         targ.power = Math.floor(this.power/2)
         this.power = Math.floor(this.power/2)
+        fillTerColor(targ)
+        addTerritoryButtons(targ)
       } else {
         this.power = this.power - targ.power
+        if (this.power < 0) {
+          this.player_id = targ.player_id
+          this.power = 0
+        }
       }
-      this.patchAttack()
-      targ.patchAttack()
-    }
-
-    patchAttack() {
-      fetch(`http://localhost:3000/territories/${this.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          player_id: this.player_id,
-          power: this.power,
-          active: false
-        })
-      }).then(res => res.json())
-      .then(getTerritories())
+      setPowerBar(this)
+      setPowerBar(targ)
+      activeTerritory = null
+      fillTerColor(this)
     }
 
   }
