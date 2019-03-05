@@ -31,22 +31,6 @@ function createTerritory() {
       allTerritories = []
     }
 
-    // static updateAll() {
-    //   this.all().forEach (ter => {
-    //     fetch(`http://localhost:3000/territories/${ter.id}`, {
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "Accept": "application/json"
-    //       },
-    //       body: JSON.stringify({
-    //         player_id: ter.player_id,
-    //         power: ter.power
-    //       })
-    //     })
-    //   })
-    // }
-
     static updateAll() {
       let ta = Territory.all()
       fetch('http://localhost:3000/update/territories', {
@@ -64,6 +48,18 @@ function createTerritory() {
       return this.neighbors.find(neighbor => neighbor.base_id == id)
     }
 
+    findAllAllies() {
+      return Territory.all().filter(ter => ter.player_id === this.player_id)
+    }
+
+    findAllEnemies() {
+      return Territory.all().filter(ter => ter.player_id != this.player_id)
+    }
+
+    findEnemyNeighbors() {
+
+    }
+
     attack(targ) {
       if (this.power > targ.power) {
         targ.player_id = this.player_id
@@ -71,6 +67,7 @@ function createTerritory() {
         this.power = Math.floor(this.power/2)
         fillTerColor(targ)
         addTerritoryButtons(targ)
+        defaultBorder(targ.id)
       } else {
         this.power = this.power - targ.power
         if (this.power < 0) {

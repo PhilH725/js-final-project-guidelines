@@ -9,6 +9,8 @@ const powerBar = (ter) => document.querySelector(`#power-${ter.id}`)
 const textBox = () => document.querySelector("#text-box")
 const endButton = () => document.getElementById('end-btn')
 const territoryDiv = (ter) => document.querySelector(`#territory-${ter.id}`)
+const neighborDiv = (ter) => document.querySelector(`#territory-${ter.base_id}`)
+const divById = (id) => document.querySelector(`#territory-${id}`)
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -27,7 +29,7 @@ function handleBoardClick(e) {
       if (!activeTerritory || activeTerritory === ter) {
         selectTerritory(ter)
       }
-    } else if (ter.player_id != turn && activeTerritory.hasNeighborX(ter.id)) {
+    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id)) {
       activeTerritory.attack(ter)
     }
   } else if (e.target && e.target.nodeName === "BUTTON"){
@@ -126,8 +128,31 @@ function setTextBox() {
 
 // Change active territory
 function selectTerritory(ter) {
-  activeTerritory === ter ? activeTerritory = null : activeTerritory = ter
+  // activeTerritory === ter ? activeTerritory = null : activeTerritory = ter
+  if (activeTerritory === ter) {
+    activeTerritory = null
+    ter.neighbors.forEach(n => {
+      // neighborDiv(n).style.border = "5px solid black"
+      defaultBorder(n.base_id)
+    })
+  } else {
+    activeTerritory = ter
+    ter.neighbors.forEach(n => {
+      if (Territory.find(n.base_id).player_id != ter.player_id) {
+        // neighborDiv(n).style.border = "5px solid orange"
+        attackBorder(n.base_id)
+      }
+    })
+  }
   fillTerColor(ter)
+}
+
+function defaultBorder(id) {
+  divById(id).style.border = "5px solid black"
+}
+
+function attackBorder(id) {
+  divById(id).style.border = "5px solid orange"
 }
 
 function fillTerColor(ter) {
