@@ -4,13 +4,11 @@ let powerStore = 0
 let activeTerritory
 
 // retrieve page elements
-const getBoard = () =>  document.getElementById('game-board')
+const board = () =>  document.getElementById('game-board')
 const powerBar = (ter) => document.querySelector(`#power-${ter.id}`)
 const textBox = () => document.querySelector("#text-box")
 const troopsBar = () => document.querySelector("#troop-level")
 const endButton = () => document.getElementById('end-btn')
-const territoryDiv = (ter) => document.querySelector(`#territory-${ter.id}`)
-const neighborDiv = (ter) => document.querySelector(`#territory-${ter.base_id}`)
 const divById = (id) => document.querySelector(`#territory-${id}`)
 const newGameButton = () => document.getElementById('new-game')
 const activeBar = () => document.getElementById('active-ter-specifics')
@@ -22,7 +20,7 @@ function init() {
   getTerritories()
   endButton().addEventListener('click', endTurn)
   setTroopsBar()
-  getBoard().addEventListener('click', handleBoardClick)
+  board().addEventListener('click', handleBoardClick)
   activeBar().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
 }
@@ -66,7 +64,7 @@ function getTerritories() {
 
 // iterate through territories to create game board
 function renderGameBoard(territories) {
-  getBoard().innerHTML = ''
+  board().innerHTML = ''
   territories.forEach(renderTerritory)
 }
 
@@ -74,7 +72,7 @@ function renderGameBoard(territories) {
 function renderTerritory(ter) {
 
   terDiv = document.createElement('div')
-  getBoard().appendChild(terDiv)
+  board().appendChild(terDiv)
   terDiv.classList.add('territory')
 
   terName = document.createElement('h3')
@@ -86,16 +84,6 @@ function renderTerritory(ter) {
   powerEl.id = `power-${ter.id}`
   terDiv.appendChild(powerEl)
   powerEl.innerText = `Power: ${ter.power} `
-
-  // if (ter.player_id === turn) {
-  //   minusBtn = document.createElement('button')
-  //   terDiv.appendChild(minusBtn)
-  //   minusBtn.innerText = '-'
-  //
-  //   plusBtn = document.createElement('button')
-  //   terDiv.appendChild(plusBtn)
-  //   plusBtn.innerText = '+'
-  // }
 
   fillTerColor(ter)
 
@@ -209,17 +197,6 @@ function fillTerColor(ter) {
     }
   }
 }
-
-
-// function addTerritoryButtons(ter) {
-//   minusBtn = document.createElement('button')
-//   territoryDiv(ter).appendChild(minusBtn)
-//   minusBtn.innerText = '-'
-//
-//   plusBtn = document.createElement('button')
-//   territoryDiv(ter).appendChild(plusBtn)
-//   plusBtn.innerText = '+'
-// }
 
 // Change turn state
 function endTurn() {
