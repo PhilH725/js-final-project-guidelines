@@ -18,7 +18,7 @@ function createTerritory() {
 
     // Assign players random territories for new game
     static randomizePlayers() {
-      let arr = shuffle([1,1,1,1,1,1,2,2,2,2,2,2])
+      let arr = shuffle([1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2])
       for (const index in arr) {
         let ter = Territory.find(parseInt(index) + 1)
         ter.player_id = arr[index]
@@ -66,7 +66,7 @@ function createTerritory() {
 
       fillTerColor(this)
       fillTerColor(targ)
-      
+
       defaultBorder(this.id)
       defaultBorder(targ.id)
     }

@@ -9,7 +9,7 @@ const powerBar = (ter) => document.querySelector(`#power-${ter.id}`)
 const textBox = () => document.querySelector("#text-box")
 const troopsBar = () => document.querySelector("#troop-level")
 const endButton = () => document.getElementById('end-btn')
-const divById = (id) => document.querySelector(`#territory-${id}`)
+const divById = (id) => document.querySelector(`#map-ter-${id} > *:not(text)`)
 const newGameButton = () => document.getElementById('new-game')
 const activeBar = () => document.getElementById('active-ter-specifics')
 
@@ -37,26 +37,26 @@ function getTerritories() {
 
 // iterate through territories to create game board
 function renderGameBoard(territories) {
-  clear(board())
+  // clear(board())
   territories.forEach(renderTerritory)
 }
 
 // render each territory
 function renderTerritory(ter) {
 
-  terDiv = document.createElement('div')
-  board().appendChild(terDiv)
-  terDiv.classList.add('territory')
-
-  terName = document.createElement('h3')
-  terDiv.appendChild(terName)
-  terDiv.id = `territory-${ter.id}`
-  terName.innerText = `Territory ${ter.id}`
-
-  powerEl = document.createElement('p')
-  powerEl.id = `power-${ter.id}`
-  terDiv.appendChild(powerEl)
-  powerEl.innerText = `Power: ${ter.power} `
+  // terDiv = document.createElement('div')
+  // board().appendChild(terDiv)
+  // terDiv.classList.add('territory')
+  //
+  // terName = document.createElement('h3')
+  // terDiv.appendChild(terName)
+  // terDiv.id = `territory-${ter.id}`
+  // terName.innerText = `Territory ${ter.id}`
+  //
+  // powerEl = document.createElement('p')
+  // powerEl.id = `power-${ter.id}`
+  // terDiv.appendChild(powerEl)
+  // powerEl.innerText = `Power: ${ter.power} `
 
   fillTerColor(ter)
 
@@ -129,16 +129,19 @@ function activeBorder(id) {
 
 function fillTerColor(ter) {
   if (ter.player_id === 1) {
-    divById(ter.id).style.backgroundColor = `rgba(61,119,191,${ter.power/5})`
+    divById(ter.id).style.fill = `rgba(61,119,191,${ter.power/5})`
   } else {
-    divById(ter.id).style.backgroundColor = `rgba(178,28,0,${ter.power/5})`
+    divById(ter.id).style.fill = `rgba(178,28,0,${ter.power/5})`
   }
 }
 
 // Handle click events for territories and power increment buttons
 function handleBoardClick(e) {
-  if (e.target && e.target.className === "territory") {
-    let ter = Territory.find(e.target.id.slice(10))
+  // let territories = document.querySelectorAll('*[id^="map-ter-"]')
+  // debugger
+  if (e.target && e.target.parentElement.parentElement.id === 'map') {
+    let ter = Territory.find(e.target.id)
+    // debugger
 
     if (ter.player_id == turn) {
 
