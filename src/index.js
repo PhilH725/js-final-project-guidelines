@@ -32,6 +32,10 @@ function handleBoardClick(e) {
       if (!activeTerritory || activeTerritory === ter) {
         clear(activeBar())
         selectTerritory(ter)
+      } else if (activeTerritory.player_id === ter.player_id) {
+        clear(activeBar())
+        selectTerritory(activeTerritory)
+        selectTerritory(ter)
       }
     } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id)) {
       activeTerritory.attack(ter)
@@ -94,6 +98,7 @@ function alterPower(ter, num) {
   setPowerBar(ter)
   powerStore = powerStore + (-num)
   setTroopsBar()
+  fillTerColor(ter)
 }
 
 function setPowerBar(ter) {
