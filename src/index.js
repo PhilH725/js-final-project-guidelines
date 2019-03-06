@@ -18,42 +18,11 @@ document.addEventListener('DOMContentLoaded', init)
 
 function init() {
   getTerritories()
-  endButton().addEventListener('click', endTurn)
   setTroopsBar()
+  endButton().addEventListener('click', endTurn)
   board().addEventListener('click', handleBoardClick)
   activeBar().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
-}
-
-function handleBoardClick(e) {
-  if (e.target && e.target.className === "territory") {
-    let ter = Territory.find(e.target.id.slice(10))
-    if (ter.player_id == turn) {
-      if (!activeTerritory || activeTerritory === ter) {
-        clear(activeBar())
-        selectTerritory(ter)
-      } else if (activeTerritory.player_id === ter.player_id) {
-        clear(activeBar())
-        selectTerritory(activeTerritory)
-        selectTerritory(ter)
-      }
-    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id)) {
-      activeTerritory.attack(ter)
-    }
-  }
-}
-
-function handlePowerClick(e) {
-  if (e.target && e.target.nodeName === "BUTTON"){
-    let ter = activeTerritory
-    let power = activeTerritory.power
-
-    if (e.target.textContent === "-" && power > 0) {
-      alterPower(ter, -1)
-    } else if (e.target.textContent === "+" && powerStore > 0) {
-      alterPower(ter, 1)
-    }
-  }
 }
 
 // fetch territories from db
@@ -68,7 +37,7 @@ function getTerritories() {
 
 // iterate through territories to create game board
 function renderGameBoard(territories) {
-  board().innerHTML = ''
+  clear(board())
   territories.forEach(renderTerritory)
 }
 
@@ -109,8 +78,8 @@ function setTroopsBar() {
   troopsBar().textContent = `Available troops: ${powerStore}`
 }
 
-// Change active territory
-function selectTerritory(ter) {
+// Toggle active territory
+function toggleActive(ter) {
   if (activeTerritory === ter) {
     activeTerritory = null
     defaultBorder(ter.id)
@@ -145,6 +114,7 @@ function setTerritorySidebar(ter) {
   plusBtn.textContent = '+'
 }
 
+// Style based on game state
 function defaultBorder(id) {
   divById(id).style.border = "5px solid black"
 }
@@ -158,12 +128,47 @@ function activeBorder(id) {
 }
 
 function fillTerColor(ter) {
-  let terDiv = document.querySelector(`#territory-${ter.id}`)
-
   if (ter.player_id === 1) {
-    terDiv.style.backgroundColor = `rgba(61,119,191,${ter.power/5})`
+    divById(ter.id).style.backgroundColor = `rgba(61,119,191,${ter.power/5})`
   } else {
-    terDiv.style.backgroundColor = `rgba(178,28,0,${ter.power/5})`
+    divById(ter.id).style.backgroundColor = `rgba(178,28,0,${ter.power/5})`
+  }
+}
+
+// Handle click events for territories and power increment buttons
+function handleBoardClick(e) {
+  if (e.target && e.target.className === "territory") {
+    let ter = Territory.find(e.target.id.slice(10))
+
+    if (ter.player_id == turn) {
+
+      if (!activeTerritory || activeTerritory === ter) {
+        clear(activeBar())
+        toggleActive(ter)
+
+      } else if (activeTerritory.player_id === ter.player_id) {
+        clear(activeBar())
+        toggleActive(activeTerritory)
+        toggleActive(ter)
+      }
+
+    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id)) {
+      activeTerritory.attack(ter)
+    }
+
+  }
+}
+
+function handlePowerClick(e) {
+  if (e.target && e.target.nodeName === "BUTTON") {
+
+    if (e.target.textContent === "-" && activeTerritory.power > 0) {
+      alterPower(activeTerritory, -1)
+
+    } else if (e.target.textContent === "+" && powerStore > 0) {
+      alterPower(activeTerritory, 1)
+    }
+
   }
 }
 
@@ -186,6 +191,13 @@ function startNewGame() {
   Territory.updateAll()
 }
 
+// Helpers
+function clear(area) {
+  while (area.firstChild) {
+    area.removeChild(area.firstChild)
+  }
+}
+
 function shuffle(array) {
   var l = array.length, t, i;
   while (l) {
@@ -197,16 +209,7 @@ function shuffle(array) {
   return array;
 }
 
-// Helpers
-function clear(area) {
-  while (area.firstChild) {
-    area.removeChild(area.firstChild)
-  }
-}
-
 function rollDice(num) {
   max = num*3
   return Math.floor(Math.random() * (max - num)) + num
 }
-
-/// ability to move troops to neighboring allied territories
