@@ -69,24 +69,27 @@ function createTerritory() {
     }
 
     attack(targ) {
-      if (this.power > targ.power) {
+      let att = rollDice(this.power)
+      let def = rollDice(targ.power)
+      if (att > def) {
         targ.player_id = this.player_id
-        targ.power = Math.floor(this.power/2)
-        this.power = Math.floor(this.power/2)
+        targ.power = this.power - Math.round((def/att)*this.power)
+        this.power = 1
         fillTerColor(targ)
         defaultBorder(targ.id)
+      } else if (att === def) {
+        this.power = Math.floor(this.power/2)
+        targ.power = Math.floor(targ.power/2)
       } else {
-        this.power = this.power - targ.power
-        if (this.power < 0) {
-          this.player_id = targ.player_id
-          this.power = 0
-        }
+        this.power = 1
+        targ.power = targ.power - Math.round((att/def)*targ.power) - 1
       }
       setPowerBar(this)
       setPowerBar(targ)
       activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
       activeTerritory = null
       fillTerColor(this)
+      fillTerColor(targ)
       defaultBorder(this.id)
     }
 

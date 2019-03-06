@@ -161,45 +161,9 @@ function fillTerColor(ter) {
   let terDiv = document.querySelector(`#territory-${ter.id}`)
 
   if (ter.player_id === 1) {
-    switch (ter.power) {
-      case 4:
-        terDiv.style.backgroundColor = 'rgba(61,119,191,0.8)'
-        break
-      case 3:
-        terDiv.style.backgroundColor = 'rgba(61,119,191,0.6)'
-        break
-      case 2:
-        terDiv.style.backgroundColor = 'rgba(61,119,191,0.4)'
-        break
-      case 1:
-        terDiv.style.backgroundColor = 'rgba(61,119,191,0.2)'
-        break
-      case 0:
-        terDiv.style.backgroundColor = 'rgba(61,119,191,0)'
-        break
-      default:
-        terDiv.style.backgroundColor = 'rgba(61,119,191,1)'
-    }
+    terDiv.style.backgroundColor = `rgba(61,119,191,${ter.power/5})`
   } else {
-    switch (ter.power) {
-      case 4:
-        terDiv.style.backgroundColor = 'rgba(178,28,0,0.8)'
-        break
-      case 3:
-        terDiv.style.backgroundColor = 'rgba(178,28,0,0.6)'
-        break
-      case 2:
-        terDiv.style.backgroundColor = 'rgba(178,28,0,0.4)'
-        break
-      case 1:
-        terDiv.style.backgroundColor = 'rgba(178,28,0,0.2)'
-        break
-      case 0:
-        terDiv.style.backgroundColor = 'rgba(178,28,0,0)'
-        break
-      default:
-        terDiv.style.backgroundColor = 'rgba(178,28,0,1)'
-    }
+    terDiv.style.backgroundColor = `rgba(178,28,0,${ter.power/5})`
   }
 }
 
@@ -240,6 +204,9 @@ function clear(area) {
   }
 }
 
-/// conditionally render buttons (set turn variable, add end turn btn)
-/// cap power allocation
+function rollDice(num) {
+  max = num*3
+  return Math.floor(Math.random() * (max - num)) + num
+}
+
 /// ability to move troops to neighboring allied territories
