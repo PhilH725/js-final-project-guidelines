@@ -120,11 +120,13 @@ function setTroopsBar() {
 function selectTerritory(ter) {
   if (activeTerritory === ter) {
     activeTerritory = null
+    defaultBorder(ter.id)
     ter.neighbors.forEach(n => {
       defaultBorder(n.base_id)
     })
   } else {
     activeTerritory = ter
+    activeBorder(ter.id)
     ter.neighbors.forEach(n => {
       if (Territory.find(n.base_id).player_id != ter.player_id) {
         attackBorder(n.base_id)
@@ -132,7 +134,6 @@ function selectTerritory(ter) {
     })
     setTerritorySidebar(ter)
   }
-  fillTerColor(ter)
 }
 
 function setTerritorySidebar(ter) {
@@ -156,16 +157,56 @@ function defaultBorder(id) {
 }
 
 function attackBorder(id) {
-  divById(id).style.border = "5px solid orange"
+  divById(id).style.border = "5px solid #27C26A"
+}
+
+function activeBorder(id) {
+  divById(id).style.border = "5px solid #FF9D0F"
 }
 
 function fillTerColor(ter) {
   let terDiv = document.querySelector(`#territory-${ter.id}`)
 
-  if (activeTerritory === ter) {
-    terDiv.style.backgroundColor = 'purple'
+  if (ter.player_id === 1) {
+    switch (ter.power) {
+      case 4:
+        terDiv.style.backgroundColor = 'rgba(61,119,191,0.8)'
+        break
+      case 3:
+        terDiv.style.backgroundColor = 'rgba(61,119,191,0.6)'
+        break
+      case 2:
+        terDiv.style.backgroundColor = 'rgba(61,119,191,0.4)'
+        break
+      case 1:
+        terDiv.style.backgroundColor = 'rgba(61,119,191,0.2)'
+        break
+      case 0:
+        terDiv.style.backgroundColor = 'rgba(61,119,191,0)'
+        break
+      default:
+        terDiv.style.backgroundColor = 'rgba(61,119,191,1)'
+    }
   } else {
-  ter.player_id === 1 ? terDiv.style.backgroundColor = 'lightblue' : terDiv.style.backgroundColor = 'red'
+    switch (ter.power) {
+      case 4:
+        terDiv.style.backgroundColor = 'rgba(178,28,0,0.8)'
+        break
+      case 3:
+        terDiv.style.backgroundColor = 'rgba(178,28,0,0.6)'
+        break
+      case 2:
+        terDiv.style.backgroundColor = 'rgba(178,28,0,0.4)'
+        break
+      case 1:
+        terDiv.style.backgroundColor = 'rgba(178,28,0,0.2)'
+        break
+      case 0:
+        terDiv.style.backgroundColor = 'rgba(178,28,0,0)'
+        break
+      default:
+        terDiv.style.backgroundColor = 'rgba(178,28,0,1)'
+    }
   }
 }
 

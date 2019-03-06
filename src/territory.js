@@ -87,6 +87,7 @@ function createTerritory() {
       activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
       activeTerritory = null
       fillTerColor(this)
+      defaultBorder(this.id)
     }
 
   }
