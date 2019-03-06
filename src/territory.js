@@ -74,7 +74,6 @@ function createTerritory() {
         targ.power = Math.floor(this.power/2)
         this.power = Math.floor(this.power/2)
         fillTerColor(targ)
-        addTerritoryButtons(targ)
         defaultBorder(targ.id)
       } else {
         this.power = this.power - targ.power
