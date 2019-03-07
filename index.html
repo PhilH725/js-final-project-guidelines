@@ -6,10 +6,9 @@
     <title>Conquest</title>
   </head>
   <body>
-    <h1 id="main-title">Conquest</h1>
+    <h1 id="main-title">JSON Derule The World</h1>
 
-    <span>
-
+    <div id="wrapper">
       <div id="game-board">
         <svg width="800px" height="600px" viewBox="0 0 1203 893" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="1">
@@ -152,25 +151,26 @@
         </svg>
       </div>
 
-      <br>
+      <div id="hud-box">
 
-      <div id="text-box">
-        <div id="turn-bar">
-          <span>
-            <button type="button" id="end-btn">End Turn</button>
-            <span id="current-turn">Player 1's turn</span>
-          </span>
-        </div>
-        <br>
-        <div id="troop-level"></div>
-        <br>
-        <div id="active-ter-specifics">
+      </div>
+    </div>
 
-        </div>
+    <div id="info-bars">
+      <div id="option-bar">
+        <span id="current-turn">Player 1's turn</span>
+        <button type="button" id="end-btn">End Turn</button>
         <button id="new-game">Start New Game</button>
       </div>
 
-    </span>
+      <div id="text-box">
+        <!-- <div id="troop-level"></div>
+        <div id="active-ter-specifics">
+
+        </div> -->
+      </div>
+    </div>
+    <br>
 
 
     <script src="src/territory.js"></script>
