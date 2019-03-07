@@ -43,13 +43,16 @@ function createTerritory() {
     // Attack
     attack(targ) {
       let att = rollDice(this.power)
-      let def = rollDice(targ.power)
+      let def = rollDice(targ.power) + 1
 
       if (att > def) {
         targ.player_id = this.player_id
         targ.power = this.power - Math.round((def/att)*this.power)
         this.power = 1
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful! (Score: ${att} to ${def})`)
+        if (Territory.playerTerritories(this.player_id) === 22) {
+          window.alert(`Player ${this.player_id} wins!`)
+        }
       } else if (att === def) {
         this.power = Math.floor(this.power/2)
         targ.power = Math.floor(targ.power/2)
@@ -58,7 +61,7 @@ function createTerritory() {
       } else {
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
         this.power = 1
-        targ.power = targ.power - Math.round((att/def)*targ.power) - 1
+        targ.power = targ.power - Math.round((att/def)*targ.power)
       }
 
       activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
@@ -93,6 +96,10 @@ function createTerritory() {
 
     static resetPower() {
       this.all().forEach(t => t.power = 5)
+    }
+
+    static playerTerritories(id) {
+      return this.all().filter(t => t.player_id === id).length
     }
 
     // Helper instance methods

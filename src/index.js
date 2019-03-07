@@ -8,7 +8,7 @@ let activeTerritory
 // retrieve page elements
 const board = () =>  document.getElementById('game-board')
 const textBox = () => document.querySelector("#text-box")
-// const troopsBar = () => document.querySelector("#troop-level")
+const troopsBar = () => document.querySelector("#troops-bar")
 const endButton = () => document.getElementById('end-btn')
 const divById = (id) => document.querySelector(`#map-ter-${id} > *:not(text)`)
 const newGameButton = () => document.getElementById('new-game')
@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', init)
 
 function init() {
   getTerritories()
-  // setTroopsBar()
+  setTroopsBar()
   endButton().addEventListener('click', endTurn)
   board().addEventListener('click', handleBoardClick)
-  // activeBar().addEventListener('click', handlePowerClick)
+  hudBox().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
   scrollUp().addEventListener('click', handleScroll)
   scrollDown().addEventListener('click', handleScroll)
@@ -60,13 +60,14 @@ function renderTerritory(ter) {
 function alterPower(ter, num) {
   ter.power = ter.power + (num)
   powerStore = powerStore + (-num)
-  // setTroopsBar()
+  document.querySelector('#hud-power-info').textContent = `Power: ${ter.power}`
+  setTroopsBar()
   fillTerColor(ter)
 }
 
-// function setTroopsBar() {
-//   troopsBar().textContent = `Available troops: ${powerStore}`
-// }
+function setTroopsBar() {
+  troopsBar().textContent = `${powerStore}`
+}
 
 // Toggle active territory
 function toggleActive(ter) {
@@ -177,7 +178,7 @@ function handleBoardClick(e) {
 function handlePowerClick(e) {
   if (e.target && e.target.nodeName === "BUTTON") {
 
-    if (e.target.textContent === "-" && activeTerritory.power > 0) {
+    if (e.target.textContent === "-" && activeTerritory.power > 1) {
       alterPower(activeTerritory, -1)
 
     } else if (e.target.textContent === "+" && powerStore > 0) {
@@ -218,6 +219,8 @@ function endTurn() {
   }
 
   Territory.updateAll()
+  powerStore = 10
+  setTroopsBar()
 }
 
 // Start new game
