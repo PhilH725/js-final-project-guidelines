@@ -13,7 +13,8 @@
 }
 
 .active-ter {
-  background-color: purple;
+  stroke: yellow;
+  stroke-width: 4px;
 }
 
 .territory {

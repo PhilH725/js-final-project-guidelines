@@ -61,7 +61,7 @@ function createTerritory() {
       setPowerBar(this)
       setPowerBar(targ)
 
-      activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
+      activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id)
       activeTerritory = null
 
       fillTerColor(this)

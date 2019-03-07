@@ -37,27 +37,12 @@ function getTerritories() {
 
 // iterate through territories to create game board
 function renderGameBoard(territories) {
-  // clear(board())
   territories.forEach(renderTerritory)
 }
 
 // render each territory
 function renderTerritory(ter) {
-
-  // terDiv = document.createElement('div')
-  // board().appendChild(terDiv)
-  // terDiv.classList.add('territory')
-  //
-  // terName = document.createElement('h3')
-  // terDiv.appendChild(terName)
-  // terDiv.id = `territory-${ter.id}`
-  // terName.innerText = `Territory ${ter.id}`
-  //
-  // powerEl = document.createElement('p')
-  // powerEl.id = `power-${ter.id}`
-  // terDiv.appendChild(powerEl)
-  // powerEl.innerText = `Power: ${ter.power} `
-
+  defaultBorder(ter.id)
   fillTerColor(ter)
 
 }
@@ -116,15 +101,18 @@ function setTerritorySidebar(ter) {
 
 // Style based on game state
 function defaultBorder(id) {
-  divById(id).style.border = "5px solid black"
+  divById(id).style.stroke = 'black'
+  divById(id).style.strokeWidth = '2px'
 }
 
 function attackBorder(id) {
-  divById(id).style.border = "5px solid #27C26A"
+  divById(id).style.stroke = 'pink'
+  divById(id).style.strokeWidth = '4px'
 }
 
 function activeBorder(id) {
-  divById(id).style.border = "5px solid #FF9D0F"
+  divById(id).style.stroke = 'yellow'
+  divById(id).style.strokeWidth = '4px'
 }
 
 function fillTerColor(ter) {
