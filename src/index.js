@@ -5,7 +5,6 @@ let activeTerritory
 
 // retrieve page elements
 const board = () =>  document.getElementById('game-board')
-const powerBar = (ter) => document.querySelector(`#power-${ter.id}`)
 const textBox = () => document.querySelector("#text-box")
 const troopsBar = () => document.querySelector("#troop-level")
 const endButton = () => document.getElementById('end-btn')
@@ -49,14 +48,9 @@ function renderTerritory(ter) {
 
 function alterPower(ter, num) {
   ter.power = ter.power + (num)
-  setPowerBar(ter)
   powerStore = powerStore + (-num)
   setTroopsBar()
   fillTerColor(ter)
-}
-
-function setPowerBar(ter) {
-  powerBar(ter).textContent = `Power: ${ter.power}`
 }
 
 function setTroopsBar() {
@@ -117,19 +111,17 @@ function activeBorder(id) {
 
 function fillTerColor(ter) {
   if (ter.player_id === 1) {
-    divById(ter.id).style.fill = `rgba(61,119,191,${ter.power/5})`
+    divById(ter.id).style.fill = `rgba(61,119,191,${ter.power/10})`
   } else {
-    divById(ter.id).style.fill = `rgba(178,28,0,${ter.power/5})`
+    divById(ter.id).style.fill = `rgba(178,28,0,${ter.power/10})`
   }
 }
 
 // Handle click events for territories and power increment buttons
 function handleBoardClick(e) {
-  // let territories = document.querySelectorAll('*[id^="map-ter-"]')
-  // debugger
+
   if (e.target && e.target.parentElement.parentElement.id === 'map') {
     let ter = Territory.find(e.target.id)
-    // debugger
 
     if (ter.player_id == turn) {
 
