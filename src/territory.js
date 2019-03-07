@@ -46,14 +46,14 @@ function createTerritory() {
       let def = rollDice(targ.power)
 
       if (att > def) {
-        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful!`)
         targ.player_id = this.player_id
         targ.power = this.power - Math.round((def/att)*this.power)
         this.power = 1
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful!  Troops now stationed in ${targ.name}: ${targ.power}`)
       } else if (att === def) {
-        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
         this.power = Math.floor(this.power/2)
         targ.power = Math.floor(targ.power/2)
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
 
       } else {
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
