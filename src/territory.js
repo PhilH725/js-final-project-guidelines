@@ -49,14 +49,14 @@ function createTerritory() {
         targ.player_id = this.player_id
         targ.power = this.power - Math.round((def/att)*this.power)
         this.power = 1
-        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful!  Troops now stationed in ${targ.name}: ${targ.power}`)
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful! (Score: ${att} to ${def})`)
       } else if (att === def) {
         this.power = Math.floor(this.power/2)
         targ.power = Math.floor(targ.power/2)
-        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
 
       } else {
-        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
         this.power = 1
         targ.power = targ.power - Math.round((att/def)*targ.power) - 1
       }

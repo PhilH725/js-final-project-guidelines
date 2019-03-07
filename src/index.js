@@ -31,6 +31,8 @@ function init() {
   newGameButton().addEventListener('click', startNewGame)
   scrollUp().addEventListener('click', handleScroll)
   scrollDown().addEventListener('click', handleScroll)
+  document.querySelector('#up-icon').addEventListener('click', handleScroll)
+  document.querySelector('#down-icon').addEventListener('click', handleScroll)
 }
 
 // fetch territories from db
@@ -77,12 +79,13 @@ function toggleActive(ter) {
   } else {
     activeTerritory = ter
     activeBorder(ter.id)
-    ter.neighbors.forEach(n => {
-      if (Territory.find(n.base_id).player_id != ter.player_id) {
-        attackBorder(n.base_id)
-      }
-    })
-    // setTerritorySidebar(ter)
+    if (ter.power > 1) {
+      ter.neighbors.forEach(n => {
+        if (Territory.find(n.base_id).player_id != ter.player_id) {
+          attackBorder(n.base_id)
+        }
+      })
+    }
     setHudBox(ter)
   }
 }
@@ -157,16 +160,14 @@ function handleBoardClick(e) {
     if (ter.player_id == turn) {
 
       if (!activeTerritory || activeTerritory === ter) {
-        // clear(activeBar())
         toggleActive(ter)
 
       } else if (activeTerritory.player_id === ter.player_id) {
-        // clear(activeBar())
         toggleActive(activeTerritory)
         toggleActive(ter)
       }
 
-    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id)) {
+    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id) && activeTerritory.power > 1) {
       activeTerritory.attack(ter)
     }
 
@@ -187,7 +188,7 @@ function handlePowerClick(e) {
 }
 
 function handleScroll(e) {
-  if (e.target.id === 'scroll-up') {
+  if (e.target.id === 'scroll-up' || e.target.id === 'up-icon') {
     if (scrollNum < gameLog.length) {
       displayGameLog(++scrollNum)
     }
@@ -196,7 +197,6 @@ function handleScroll(e) {
       displayGameLog(--scrollNum)
     }
   }
-
 }
 
 // Display game log
@@ -225,7 +225,7 @@ function startNewGame() {
   Territory.resetPower()
   Territory.randomizePlayers()
   Territory.updateAll()
-  gameLog = ["New game started! Player 1 and Player 2 are competing to JSON Derule the World!"]
+  gameLog = ["New game! Player 1 and Player 2 are competing to JSON Derule the World!"]
 
   turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
