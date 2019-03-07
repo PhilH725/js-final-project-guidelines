@@ -1,9 +1,15 @@
 
-#main-title {
+/* #main-title {
   color: black;
   font-size: 2.2em;
   margin-left: 200px;
   margin-bottom: 0px;
+} */
+
+.navbar {
+  background-color: lightgray;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 
 /* #game-board {
@@ -48,7 +54,7 @@
   margin-left: 8px;
   border-style: solid;
   border-width: 2px;
-  background-color: #ffb2ff;
+  background-color: lightgray;
 }
 
 #hud-title-div {
@@ -96,17 +102,17 @@
 #hud-minimap {
   border-style: solid;
   border-width: 1px;
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   margin-left: 12px;
-  background-color: lightgray;
+  background-color: white;
   position: relative;
 }
 
 #hud-minimap svg {
   position: absolute;
-  left: 60%;
-  top: 60%;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   width: auto;
   height: auto;
