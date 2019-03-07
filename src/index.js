@@ -6,21 +6,22 @@ let activeTerritory
 // retrieve page elements
 const board = () =>  document.getElementById('game-board')
 const textBox = () => document.querySelector("#text-box")
-const troopsBar = () => document.querySelector("#troop-level")
+// const troopsBar = () => document.querySelector("#troop-level")
 const endButton = () => document.getElementById('end-btn')
 const divById = (id) => document.querySelector(`#map-ter-${id} > *:not(text)`)
 const newGameButton = () => document.getElementById('new-game')
-const activeBar = () => document.getElementById('active-ter-specifics')
+// const activeBar = () => document.getElementById('active-ter-specifics')
+const hudBox = () => document.getElementById('#hud-box')
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
 
 function init() {
   getTerritories()
-  setTroopsBar()
+  // setTroopsBar()
   endButton().addEventListener('click', endTurn)
   board().addEventListener('click', handleBoardClick)
-  activeBar().addEventListener('click', handlePowerClick)
+  // activeBar().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
 }
 
@@ -49,13 +50,13 @@ function renderTerritory(ter) {
 function alterPower(ter, num) {
   ter.power = ter.power + (num)
   powerStore = powerStore + (-num)
-  setTroopsBar()
+  // setTroopsBar()
   fillTerColor(ter)
 }
 
-function setTroopsBar() {
-  troopsBar().textContent = `Available troops: ${powerStore}`
-}
+// function setTroopsBar() {
+//   troopsBar().textContent = `Available troops: ${powerStore}`
+// }
 
 // Toggle active territory
 function toggleActive(ter) {
@@ -73,25 +74,30 @@ function toggleActive(ter) {
         attackBorder(n.base_id)
       }
     })
-    setTerritorySidebar(ter)
+    // setTerritorySidebar(ter)
+    setHudBox(ter)
   }
 }
 
-function setTerritorySidebar(ter) {
-  clear(activeBar())
+function setHudBox(ter) {
 
-  p = document.createElement('p')
-  p.textContent = `Adjust power in territory ${ter.id}: `
-  activeBar().appendChild(p)
-
-  minusBtn = document.createElement('button')
-  activeBar().appendChild(minusBtn)
-  minusBtn.textContent = '-'
-
-  plusBtn = document.createElement('button')
-  activeBar().appendChild(plusBtn)
-  plusBtn.textContent = '+'
 }
+
+// function setTerritorySidebar(ter) {
+//   clear(activeBar())
+//
+//   p = document.createElement('p')
+//   p.textContent = `Adjust power in territory ${ter.id}: `
+//   activeBar().appendChild(p)
+//
+//   minusBtn = document.createElement('button')
+//   activeBar().appendChild(minusBtn)
+//   minusBtn.textContent = '-'
+//
+//   plusBtn = document.createElement('button')
+//   activeBar().appendChild(plusBtn)
+//   plusBtn.textContent = '+'
+// }
 
 // Style based on game state
 function defaultBorder(id) {
@@ -129,11 +135,11 @@ function handleBoardClick(e) {
     if (ter.player_id == turn) {
 
       if (!activeTerritory || activeTerritory === ter) {
-        clear(activeBar())
+        // clear(activeBar())
         toggleActive(ter)
 
       } else if (activeTerritory.player_id === ter.player_id) {
-        clear(activeBar())
+        // clear(activeBar())
         toggleActive(activeTerritory)
         toggleActive(ter)
       }
