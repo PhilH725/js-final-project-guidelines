@@ -112,6 +112,12 @@
   width: 40px;
 }
 
+#scroll-box button {
+  background-color: white;
+  height: 30px;
+  width: 30px;
+}
+
 #text-box h5 {
   margin: .5em;
 }
