@@ -59,6 +59,10 @@
   text-align: center;
 }
 
+#power-adjust-div {
+  margin-left: 25px;
+}
+
 #info-bars-wrapper {
   margin-top: 10px;
   width: 1100px;
