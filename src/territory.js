@@ -58,9 +58,6 @@ function createTerritory() {
         targ.power = targ.power - Math.round((att/def)*targ.power) - 1
       }
 
-      setPowerBar(this)
-      setPowerBar(targ)
-
       activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
       activeTerritory = null
 
