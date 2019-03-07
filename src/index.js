@@ -105,15 +105,18 @@ function attackBorder(id) {
 }
 
 function activeBorder(id) {
-  divById(id).style.stroke = 'yellow'
+  divById(id).style.stroke = '#FFA20F'
   divById(id).style.strokeWidth = '4px'
 }
 
 function fillTerColor(ter) {
   if (ter.player_id === 1) {
-    divById(ter.id).style.fill = `rgba(61,119,191,${ter.power/10})`
+    let rg = 160 - (8 * ter.power)
+    divById(ter.id).style.fill = `rgb(${rg},${rg},255)`
   } else {
-    divById(ter.id).style.fill = `rgba(178,28,0,${ter.power/10})`
+    let blue = 140 - (7 * ter.power)
+    let green = blue + 30
+    divById(ter.id).style.fill = `rgb(255,${green},${blue})`
   }
 }
 
