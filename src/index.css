@@ -75,6 +75,20 @@
   height: 80px;
 }
 
+#scroll-box {
+  float: left;
+  height: 80px;
+  width: 40px;
+}
+
+#text-box h5 {
+  margin: .5em;
+}
+
+#text-box p {
+  margin: .5em;
+}
+
 /* #new-game {
   margin-left: auto;
 } */

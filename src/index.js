@@ -1,6 +1,8 @@
 // declare/set global variables
 let turn = 1
 let powerStore = 0
+let gameLog = []
+let scrollNum = 2
 let activeTerritory
 
 // retrieve page elements
@@ -12,6 +14,10 @@ const divById = (id) => document.querySelector(`#map-ter-${id} > *:not(text)`)
 const newGameButton = () => document.getElementById('new-game')
 // const activeBar = () => document.getElementById('active-ter-specifics')
 const hudBox = () => document.getElementById('#hud-box')
+const log1 = () => document.querySelector('#log-1')
+const log2 = () => document.querySelector('#log-2')
+const scrollUp = () => document.querySelector('#scroll-up')
+const scrollDown = () => document.querySelector('#scroll-down')
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -23,6 +29,8 @@ function init() {
   board().addEventListener('click', handleBoardClick)
   // activeBar().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
+  scrollUp().addEventListener('click', handleScroll)
+  scrollDown().addEventListener('click', handleScroll)
 }
 
 // fetch territories from db
@@ -164,8 +172,30 @@ function handlePowerClick(e) {
   }
 }
 
+function handleScroll(e) {
+  if (e.target.id === 'scroll-up') {
+    if (scrollNum < gameLog.length) {
+      displayGameLog(++scrollNum)
+    }
+  } else {
+    if (scrollNum > 2) {
+      displayGameLog(--scrollNum)
+    }
+  }
+
+}
+
+// Display game log
+function displayGameLog(num) {
+  log2().textContent = gameLog[gameLog.length-(num)]
+  log1().textContent = gameLog[gameLog.length-(num-1)]
+}
+
 // Change turn state
 function endTurn() {
+  gameLog.push(`Player ${turn}'s turn ended.`)
+  displayGameLog(2)
+
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
 
@@ -181,6 +211,13 @@ function startNewGame() {
   Territory.resetPower()
   Territory.randomizePlayers()
   Territory.updateAll()
+  gameLog = ["New game started! Player 1 and Player 2 are competing to JSON Derule the World!"]
+
+  turn = 1
+  document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
+
+  scrollNum = 2
+  displayGameLog(scrollNum)
 }
 
 // Helpers
