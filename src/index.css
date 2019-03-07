@@ -71,7 +71,7 @@
 #text-box {
   border-style: solid;
   border-width: 1px;
-  background-color: rgb(180,255,180);
+  background-color: lightgray;
   padding: 5px;
   height: 80px;
 }
@@ -113,9 +113,14 @@
 }
 
 #scroll-box button {
-  background-color: white;
+  background-color: #FFB836;
   height: 30px;
   width: 30px;
+  margin-top: 5px;
+}
+
+#scroll-box button:focus {
+  outline-color: lightgray;
 }
 
 #text-box h5 {

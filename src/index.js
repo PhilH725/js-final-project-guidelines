@@ -79,12 +79,13 @@ function toggleActive(ter) {
   } else {
     activeTerritory = ter
     activeBorder(ter.id)
-    ter.neighbors.forEach(n => {
-      if (Territory.find(n.base_id).player_id != ter.player_id) {
-        attackBorder(n.base_id)
-      }
-    })
-    // setTerritorySidebar(ter)
+    if (ter.power > 1) {
+      ter.neighbors.forEach(n => {
+        if (Territory.find(n.base_id).player_id != ter.player_id) {
+          attackBorder(n.base_id)
+        }
+      })
+    }
     setHudBox(ter)
   }
 }
@@ -159,16 +160,14 @@ function handleBoardClick(e) {
     if (ter.player_id == turn) {
 
       if (!activeTerritory || activeTerritory === ter) {
-        // clear(activeBar())
         toggleActive(ter)
 
       } else if (activeTerritory.player_id === ter.player_id) {
-        // clear(activeBar())
         toggleActive(activeTerritory)
         toggleActive(ter)
       }
 
-    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id)) {
+    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id) && activeTerritory.power > 1) {
       activeTerritory.attack(ter)
     }
 
