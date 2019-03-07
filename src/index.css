@@ -41,7 +41,6 @@
   border-style: solid;
   border-width: 3px;
   background-color: lightgray;
-  /* justify-content: center; */
 }
 
 #hud-box {
@@ -49,15 +48,20 @@
   margin-left: 8px;
   border-style: solid;
   border-width: 2px;
+  background-color: #ffb2ff;
 }
 
-#info-bars {
+#hud-title-div {
+  text-align: center;
+}
+
+#hud-power-tag {
+  text-align: center;
+}
+
+#info-bars-wrapper {
   margin-top: 10px;
   width: 1100px;
-}
-
-#info-bars :last-child {
-  margin-left: auto;
 }
 
 #option-bar {
@@ -68,6 +72,15 @@
   margin-bottom: 5px;
 }
 
+#option-bar>*{
+  display: inline-block;
+}
+
+#new-game-div {
+  /* justify-content: flex-end; */
+  margin-left: auto;
+}
+
 #text-box {
   border-style: solid;
   border-width: 1px;
@@ -76,11 +89,16 @@
   height: 80px;
 }
 
+#hud-wrapper {
+  /* margin-left: 25px; */
+}
+
 #hud-minimap {
   border-style: solid;
   border-width: 1px;
   width: 250px;
   height: 250px;
+  margin-left: 12px;
   background-color: lightgray;
   position: relative;
 }
@@ -96,14 +114,6 @@
 
 #minimap-image {
   transform: scale(.5);
-}
-
-#hud-wrapper {
-  margin-left: 12px;
-}
-
-#hud-title {
-  margin-left: 50px;
 }
 
 #scroll-box {
