@@ -11,7 +11,7 @@ const endButton = () => document.getElementById('end-btn')
 const divById = (id) => document.querySelector(`#map-ter-${id} > *:not(text)`)
 const newGameButton = () => document.getElementById('new-game')
 // const activeBar = () => document.getElementById('active-ter-specifics')
-const hudBox = () => document.getElementById('#hud-box')
+const hudBox = () => document.getElementById('hud-box')
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -81,6 +81,20 @@ function toggleActive(ter) {
 
 function setHudBox(ter) {
 
+  let hudTerName = document.getElementById('hud-title')
+  hudTerName.innerText = ter.name
+
+  let hudMap = document.getElementById('hud-map')
+  hudMap.innerHTML = ''
+
+  let copy = divById(ter.id).cloneNode(true)
+  copy.id = 'minimap-image'
+  copy.style.strokeWidth = '1'
+
+  hudMap.appendChild(copy)
+
+  let powerEl = document.getElementById('hud-power-info')
+  powerEl.innerText = `Power: ${ter.power}`
 }
 
 // function setTerritorySidebar(ter) {

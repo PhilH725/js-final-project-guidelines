@@ -4,6 +4,7 @@ function createTerritory() {
   return class {
     constructor(territoryData) {
       this.id = territoryData.id
+      this.name = territoryData.name
       this.player_id = territoryData.player_id
       this.power = territoryData.power
       this.active = territoryData.active
