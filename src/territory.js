@@ -4,6 +4,7 @@ function createTerritory() {
   return class {
     constructor(territoryData) {
       this.id = territoryData.id
+      this.name = territoryData.name
       this.player_id = territoryData.player_id
       this.power = territoryData.power
       this.active = territoryData.active
@@ -45,15 +46,17 @@ function createTerritory() {
       let def = rollDice(targ.power)
 
       if (att > def) {
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful!`)
         targ.player_id = this.player_id
         targ.power = this.power - Math.round((def/att)*this.power)
         this.power = 1
-
       } else if (att === def) {
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
         this.power = Math.floor(this.power/2)
         targ.power = Math.floor(targ.power/2)
 
       } else {
+        gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory!`)
         this.power = 1
         targ.power = targ.power - Math.round((att/def)*targ.power) - 1
       }
@@ -66,6 +69,9 @@ function createTerritory() {
 
       defaultBorder(this.id)
       defaultBorder(targ.id)
+
+      scrollNum = 2
+      displayGameLog(2)
     }
 
     // Class helper methods

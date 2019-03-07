@@ -217,7 +217,7 @@ function startNewGame() {
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
 
   scrollNum = 2
-  displayGameLog(scrollNum)
+  displayGameLog(2)
 }
 
 // Helpers
