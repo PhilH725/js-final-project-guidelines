@@ -1,4 +1,9 @@
-
+body {
+  background-image: url("https://www.jewishvirtuallibrary.org/jsource/images/maps/Germancounter1.jpg");
+  /* background-repeat: no-repeat;
+  background-size: 100% 100%; */
+  font-family: monospace;
+}
 /* #main-title {
   color: black;
   font-size: 2.2em;
@@ -7,7 +12,8 @@
 } */
 
 .navbar {
-  background-color: lightgray;
+  background-color: black;
+  color: white;
   margin-bottom: 20px;
   justify-content: center;
 }
@@ -43,18 +49,24 @@
 
 #game-board {
   flex: 0 0 67%;
-  width: 850px;
-  border-style: solid;
-  border-width: 3px;
-  background-color: lightgray;
+  /* width: 850px; */
+  border: 3px solid #FFB836;
+  background-color: black;
+  border-radius: 15px;
+}
+
+#view-box {
+  padding: 10px;
 }
 
 #hud-box {
   flex: 1;
   margin-left: 8px;
-  border-style: solid;
-  border-width: 2px;
-  background-color: lightgray;
+  border: 3px solid #FFB836;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
 }
 
 #hud-title-div {
@@ -71,11 +83,12 @@
 }
 
 #option-bar {
-  background-color: lightgray;
-  border-style: solid;
-  border-width: 1px;
-  padding: 2px;
+  background-color: black;
+  color: white;
+  border: 3px solid #FFB836;
+  padding: 10px;
   margin-bottom: 5px;
+  border-radius: 15px;
 }
 
 #option-bar>*{
@@ -88,11 +101,13 @@
 }
 
 #text-box {
-  border-style: solid;
-  border-width: 1px;
-  background-color: lightgray;
-  padding: 5px;
-  height: 80px;
+  border: 3px solid #FFB836;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  height: 100px;
+  margin-top: 10px;
+  border-radius: 15px;
 }
 
 #hud-wrapper {
@@ -100,12 +115,12 @@
 }
 
 #hud-minimap {
-  border-style: solid;
-  border-width: 1px;
-  width: 220px;
+  border: 1px solid black;
+  border-radius: 15px;
+  width: 200px;
   height: 220px;
   margin-left: 12px;
-  background-color: white;
+  background-color: RGB(252,251,233);
   position: relative;
 }
 
@@ -122,6 +137,14 @@
   transform: scale(.5);
 }
 
+#power-adjust-div {
+  margin-bottom: 20px;
+}
+
+#troops-bar {
+  margin-bottom: 20px;
+}
+
 #scroll-box {
   float: left;
   height: 80px;
@@ -136,7 +159,7 @@
 }
 
 #scroll-box button:focus {
-  outline-color: lightgray;
+  outline-color: black;
 }
 
 #text-box h5 {

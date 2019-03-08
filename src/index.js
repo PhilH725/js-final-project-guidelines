@@ -66,7 +66,7 @@ function alterPower(ter, num) {
 }
 
 function setTroopsBar() {
-  troopsBar().textContent = `${powerStore}`
+  troopsBar().textContent = `Deployable Troops: ${powerStore}`
 }
 
 // Toggle active territory
