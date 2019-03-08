@@ -14,7 +14,7 @@ body {
 .navbar {
   background-color: black;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   justify-content: center;
 }
 
@@ -67,6 +67,7 @@ body {
   color: white;
   padding: 10px;
   border-radius: 15px;
+  height: 540px;
 }
 
 #hud-title-div {
@@ -119,7 +120,7 @@ body {
   border-radius: 15px;
   width: 200px;
   height: 220px;
-  margin-left: 12px;
+  margin-left: 58px;
   background-color: RGB(252,251,233);
   position: relative;
 }
@@ -139,10 +140,19 @@ body {
 
 #power-adjust-div {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 #troops-bar {
   margin-bottom: 20px;
+  text-align: center;
+}
+
+audio {
+  margin-top: 50px;
+  margin-left: 8px;
+  width: 200px;
+  height: 40px;
 }
 
 #scroll-box {
