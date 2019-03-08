@@ -85,6 +85,7 @@ body {
   padding: 10px;
   /* border-radius: 15px; */
   height: 546px;
+  font-size: 18px;
 }
 
 #hud-title-div {
@@ -155,7 +156,6 @@ body {
 }
 
 #battle-result {
-  /* color: green; */
   font-size: 24px;
 }
 
