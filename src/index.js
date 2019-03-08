@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', init)
 
 function init() {
   getTerritories()
+  turnBorders(turn)
   setTroopsBar()
   board().addEventListener('click', handleBoardClick)
   addPowerAdjusters()
@@ -178,6 +179,19 @@ function fillTerColor(ter) {
   }
 }
 
+function turnBorders(t) {
+  let boxes = document.getElementsByClassName("box")
+  if (turn === 2) {
+    for (i = 0; i < boxes.length; i++) {
+      boxes[i].style.border = "3px solid red";
+    }
+  } else {
+    for (i = 0; i < boxes.length; i++) {
+      boxes[i].style.border = "3px solid rgb(0,0,150)";
+    }
+  }
+}
+
 // Handle click events for territories and power increment buttons
 function handleBoardClick(e) {
 
@@ -231,7 +245,7 @@ function changePhase() {
     gamePhase = "attack"
     phaseButton().textContent = "End turn"
     document.querySelector('#current-phase').textContent = "Phase: Attack!"
-    document.querySelector('#power-adjust-wrapper').removeChild(document.querySelector('#power-adjust-div'))
+    clear(document.querySelector('#power-adjust-wrapper'))
   } else {
     gamePhase = "deploy"
     document.querySelector('#current-phase').textContent = "Phase: Deploy Troops"
@@ -273,6 +287,7 @@ function endTurn() {
 
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
+  turnBorders(turn)
 
   if (activeTerritory) {
     activeTerritory = null
@@ -293,11 +308,13 @@ function startNewGame() {
 
   turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
+  turnBorders(turn)
 
   scrollNum = 2
   displayGameLog(2)
 
   if (gamePhase = "attack") {
+    clear(document.querySelector('#power-adjust-wrapper'))
     gamePhase = "deploy"
     document.querySelector('#current-phase').textContent = "Phase: Deploy Troops"
     phaseButton().textContent = "Begin attack phase"
