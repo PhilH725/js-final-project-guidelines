@@ -259,3 +259,31 @@ function rollDice(num) {
   max = num*3
   return Math.floor(Math.random() * (max - num)) + num
 }
+
+// function changeColor(el, i) {
+//   el.style.fill = `rgb(${i}, 150, 255)`
+// }
+
+// function cc (el) {
+// let i = 0
+// setInterval(()=>{
+//   i += 1
+//   changeColor(el,i)}, 5)
+// }
+
+
+// fell to 0 power after attacking (won 14-13)
+  //cap troop loss for successful attack/defense
+  //failed attack leading to 1/1 power leads to all ters being low power
+
+//cap overall power
+
+//more clear what happens after an attack? in hud?
+  //animation of ter changing color
+
+//cant minus power under 3?
+
+
+//one attack per ter per turn?
+//randomly assign new power?
+//random starting power? (still equals same amount, but 4-6 range instead of all 5)
