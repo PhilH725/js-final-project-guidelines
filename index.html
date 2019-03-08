@@ -15,9 +15,9 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-9">
+        <div class="col-8">
           <div id="game-board">
-            <svg width="800px" height="600px" viewBox="0 0 1203 893" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg id="view-box" width="720px" height="540px" viewBox="0 0 1203 893" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="1">
                     <g id="map" transform="translate(1.000000, 1.000000)">
                         <g id="map-ter-22" transform="translate(0.000000, 730.000000)">
@@ -159,7 +159,7 @@
           </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-4">
           <div id="hud-box">
             <div id="hud-wrapper">
               <div id="hud-title-div">
@@ -174,16 +174,20 @@
               </div>
               <div id=power-adjust-div>
                 <span>
-                  <span>Increase Power</span>
-                  <button id='+ button'>+</button>
-                </span>
+                  <span>Adjust Power</span>
+                  <button id='increase-btn'>+</button>
+                <!-- </span>
                 <br><br>
-                <span>
-                  <span>Decrease Power</span>
-                  <button id='- button'>-</button>
+                <span> -->
+                  <!-- <span>Decrease Power</span> -->
+                  <button id='decrease-button'>-</button>
                 </span>
               </div>
-              <p>Deployable Troops: <span id="troops-bar"></span></p>
+              <div id="troops-bar"></div>
+              <audio controls>
+                <source src="./src/assets/rockapella.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag.
+              </audio>
             </div>
           </div>
 
