@@ -78,9 +78,14 @@ function createTerritory() {
       defaultBorder(targ.id)
 
       if (Territory.playerTerritories(this.player_id) === 22) {
-        window.alert(`Player ${this.player_id} wins!`)
+        // window.alert(`Player ${this.player_id} wins!`)
+        let h4 = document.createElement('h4')
+        h4.textContent = `Player ${this.player_id} wins!`
+        // debugger
+        document.querySelector(".modal-content").appendChild(h4)
+        winModal().style.display = "block"
       }
-      
+
       result === 'win' ? setHudBox(targ, result, fadeImage) : setHudBox(this, result)
 
       scrollNum = 2

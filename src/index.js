@@ -18,6 +18,7 @@ const log2 = () => document.querySelector('#log-2')
 const scrollUp = () => document.querySelector('#scroll-up')
 const scrollDown = () => document.querySelector('#scroll-down')
 const phaseButton = () => document.querySelector('#phase-btn')
+const winModal = () => document.querySelector("#win-modal")
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -35,6 +36,11 @@ function init() {
   document.querySelector('#up-icon').addEventListener('click', handleScroll)
   document.querySelector('#down-icon').addEventListener('click', handleScroll)
   phaseButton().addEventListener('click', changePhase)
+  window.addEventListener('click', function(e) {
+    if (event.target == winModal()) {
+      winModal().style.display = "none";
+    }
+  })
 }
 
 // fetch territories from db
@@ -183,11 +189,11 @@ function turnBorders(t) {
   let boxes = document.getElementsByClassName("box")
   if (turn === 2) {
     for (i = 0; i < boxes.length; i++) {
-      boxes[i].style.border = "3px solid red";
+      boxes[i].style.border = "5px solid red";
     }
   } else {
     for (i = 0; i < boxes.length; i++) {
-      boxes[i].style.border = "3px solid rgb(0,0,150)";
+      boxes[i].style.border = "5px solid rgb(0,0,200)";
     }
   }
 }
