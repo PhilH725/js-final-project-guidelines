@@ -10,10 +10,8 @@ let activeTerritory
 const board = () =>  document.getElementById('game-board')
 const textBox = () => document.querySelector("#text-box")
 const troopsBar = () => document.querySelector("#troops-bar")
-const endButton = () => document.getElementById('end-btn')
 const divById = (id) => document.querySelector(`#map-ter-${id} > *:not(text)`)
 const newGameButton = () => document.getElementById('new-game')
-// const activeBar = () => document.getElementById('active-ter-specifics')
 const hudBox = () => document.getElementById('hud-box')
 const log1 = () => document.querySelector('#log-1')
 const log2 = () => document.querySelector('#log-2')
@@ -27,8 +25,8 @@ document.addEventListener('DOMContentLoaded', init)
 function init() {
   getTerritories()
   setTroopsBar()
-  // endButton().addEventListener('click', endTurn)
   board().addEventListener('click', handleBoardClick)
+  addPowerAdjusters()
   hudBox().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
   scrollUp().addEventListener('click', handleScroll)
@@ -232,11 +230,32 @@ function handlePhaseClick() {
   if (gamePhase === "deploy") {
     gamePhase = "attack"
     phaseButton().textContent = "End turn"
+    document.querySelector('#power-adjust-wrapper').removeChild(document.querySelector('#power-adjust-div'))
   } else {
     gamePhase = "deploy"
     phaseButton().textContent = "Begin attack phase"
     endTurn()
+    addPowerAdjusters()
   }
+}
+
+function addPowerAdjusters() {
+  let div = document.createElement('div')
+  div.id = "power-adjust-div"
+  let span = document.createElement('span')
+  span.textContent = "Adjust Power"
+  span.id = "adj-power"
+  let inc = document.createElement('button')
+  inc.textContent = "+"
+  inc.id = "increase"
+  let dec = document.createElement('button')
+  dec.textContent = "-"
+  dec.id = "decrease"
+
+  div.appendChild(span)
+  div.appendChild(dec)
+  div.appendChild(inc)
+  document.querySelector('#power-adjust-wrapper').appendChild(div)
 }
 
 // Display game log
