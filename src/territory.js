@@ -44,12 +44,17 @@ function createTerritory() {
     attack(targ) {
       let att = rollDice(this.power)
       let def = rollDice(targ.power) + 1
+      let result
+      let fadeImage
 
       if (att > def) {
         targ.player_id = this.player_id
         targ.power = this.power - Math.round((def/att)*this.power)
         this.power = 1
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful! (Score: ${att} to ${def})`)
+        fadeImage = divById(targ.id).cloneNode(true)
+        fadeImage.id = 'minimap-image3'
+        result = 'win'
         if (Territory.playerTerritories(this.player_id) === 22) {
           window.alert(`Player ${this.player_id} wins!`)
         }
@@ -57,11 +62,13 @@ function createTerritory() {
         this.power = Math.floor(this.power/2)
         targ.power = Math.floor(targ.power/2)
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
+        result = 'loss'
 
       } else {
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
         this.power = 1
         targ.power = targ.power - Math.round((att/def)*targ.power)
+        result = 'loss'
       }
 
       activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
@@ -72,6 +79,7 @@ function createTerritory() {
 
       defaultBorder(this.id)
       defaultBorder(targ.id)
+      result === 'win' ? setHudBox(targ, result, fadeImage) : setHudBox(this, result)
 
       scrollNum = 2
       displayGameLog(2)

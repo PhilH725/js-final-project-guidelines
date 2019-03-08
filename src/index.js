@@ -91,7 +91,7 @@ function toggleActive(ter) {
   }
 }
 
-function setHudBox(ter) {
+function setHudBox(ter, result=null, fadeImage=null) {
 
   let hudTerName = document.getElementById('hud-title')
   hudTerName.innerText = ter.name
@@ -107,23 +107,47 @@ function setHudBox(ter) {
 
   let powerEl = document.getElementById('hud-power-info')
   powerEl.innerText = `Power: ${ter.power}`
+
+  let resultBar = document.getElementById('battle-result')
+  resultBar.innerText = ''
+
+  if (result === 'loss') {
+    resultBar.innerText = 'Attack failed!'
+    resultBar.style.color='red'
+  } else if (result === 'win') {
+    hudImage = document.getElementById('minimap-image')
+    updateHudImage(ter, copy, fadeImage, hudMap)
+    resultBar.innerText = 'Successful Attack!'
+    resultBar.style.color='green'
+  }
 }
 
-// function setTerritorySidebar(ter) {
-//   clear(activeBar())
-//
-//   p = document.createElement('p')
-//   p.textContent = `Adjust power in territory ${ter.id}: `
-//   activeBar().appendChild(p)
-//
-//   minusBtn = document.createElement('button')
-//   activeBar().appendChild(minusBtn)
-//   minusBtn.textContent = '-'
-//
-//   plusBtn = document.createElement('button')
-//   activeBar().appendChild(plusBtn)
-//   plusBtn.textContent = '+'
-// }
+function updateHudImage(ter, copy, fadeImage, hudMap) {
+  hudMap.innerHTML = ''
+
+  let copy2 = divById(ter.id).cloneNode(true)
+  copy2.id = 'minimap-image2'
+  copy2.style.strokeWidth = '1'
+  hudMap.appendChild(copy2)
+
+  hudMap.appendChild(fadeImage)
+  removeOldTer(fadeImage)
+
+}
+
+function removeOldTer(el) {
+  //makes the opacity of the covering image 0, revealing the other. supposed to fade, but right now it just flashes
+  setTimeout(()=>{
+    el.style.opacity=0}, 750)
+  }
+
+function resetHud() {
+
+  document.getElementById('hud-title').innerText = 'Choose a territory'
+  document.getElementById('hud-map').innerHTML = ''
+  document.getElementById('hud-power-info').innerText = 'Power: ~'
+  document.getElementById('battle-result').innerText = ''
+}
 
 // Style based on game state
 function defaultBorder(id) {
@@ -221,6 +245,7 @@ function endTurn() {
   Territory.updateAll()
   powerStore = 10
   setTroopsBar()
+  resetHud()
 }
 
 // Start new game
@@ -260,30 +285,14 @@ function rollDice(num) {
   return Math.floor(Math.random() * (max - num)) + num
 }
 
-// function changeColor(el, i) {
-//   el.style.fill = `rgb(${i}, 150, 255)`
-// }
-
-// function cc (el) {
-// let i = 0
-// setInterval(()=>{
-//   i += 1
-//   changeColor(el,i)}, 5)
-// }
-
-
-// fell to 0 power after attacking (won 14-13)
   //cap troop loss for successful attack/defense
   //failed attack leading to 1/1 power leads to all ters being low power
 
-//cap overall power
-
-//more clear what happens after an attack? in hud?
-  //animation of ter changing color
 
 //cant minus power under 3?
 
-
-//one attack per ter per turn?
-//randomly assign new power?
 //random starting power? (still equals same amount, but 4-6 range instead of all 5)
+
+
+
+//
