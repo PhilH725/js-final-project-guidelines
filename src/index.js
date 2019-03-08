@@ -78,6 +78,7 @@ function toggleActive(ter) {
     ter.neighbors.forEach(n => {
       defaultBorder(n.base_id)
     })
+    resetHud()
   } else {
     activeTerritory = ter
     activeBorder(ter.id)
