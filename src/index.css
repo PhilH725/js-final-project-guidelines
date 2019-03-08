@@ -61,13 +61,13 @@ body {
 
 #hud-box {
   flex: 1;
-  margin-left: 8px;
+  margin-left: 10px;
   border: 3px solid #FFB836;
   background-color: black;
   color: white;
   padding: 10px;
   border-radius: 15px;
-  height: 540px;
+  height: 546px;
 }
 
 #hud-title-div {
@@ -80,39 +80,6 @@ body {
 
 #power-adjust-div {
   margin-left: 25px;
-}
-
-#info-bars-wrapper {
-  margin-top: 10px;
-  width: 1100px;
-}
-
-#option-bar {
-  background-color: black;
-  color: white;
-  border: 3px solid #FFB836;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 15px;
-}
-
-#option-bar>*{
-  display: inline-block;
-}
-
-#new-game-div {
-  /* justify-content: flex-end; */
-  margin-left: auto;
-}
-
-#text-box {
-  border: 3px solid #FFB836;
-  background-color: black;
-  color: white;
-  padding: 10px;
-  height: 100px;
-  margin-top: 10px;
-  border-radius: 15px;
 }
 
 #hud-wrapper {
@@ -160,6 +127,7 @@ body {
   text-align: center;
 }
 
+
 #battle-result-div {
   text-align: center;
 }
@@ -167,6 +135,34 @@ body {
 #battle-result {
   /* color: green; */
   font-size: 24px;
+
+#option-bar {
+  background-color: black;
+  color: white;
+  border: 3px solid #FFB836;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+
+#option-bar>*{
+  display: inline-block;
+}
+
+#new-game-div {
+  /* justify-content: flex-end; */
+  margin-left: auto;
+}
+
+#text-box {
+  border: 3px solid #FFB836;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  height: 120px;
+  margin-top: 10px;
+  border-radius: 15px;
 }
 
 audio {
@@ -184,26 +180,31 @@ audio {
   background-color: #FFB836;
   height: 30px;
   width: 30px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 #scroll-box button:focus {
   outline-color: black;
 }
 
-#text-box h5 {
-  margin: .5em;
-}
-
 #text-box p {
   margin: .5em;
 }
 
-/* #new-game {
-  margin-left: auto;
-} */
+#phase-box {
+  flex: 1;
+  border: 3px solid rgb(0,0,150);
+  background-color: black;
+  /* background-color: rgb(0,0,150); */
+  color: white;
+  padding: 10px;
+  height: 120px;
+  margin-left: 10px;
+  margin-top: 10px;
+  border-radius: 15px;
+  text-align: center;
+}
 
-
-
-
-/*  */
+#phase-box h4 {
+  /* color: rgb(0,0,150); */
+}

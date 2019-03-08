@@ -3,6 +3,7 @@ let turn = 1
 let powerStore = 0
 let gameLog = []
 let scrollNum = 2
+let gamePhase = "deploy"
 let activeTerritory
 
 // retrieve page elements
@@ -167,12 +168,13 @@ function activeBorder(id) {
 
 function fillTerColor(ter) {
   if (ter.player_id === 1) {
-    let rg = 160 - (8 * ter.power)
-    divById(ter.id).style.fill = `rgb(${rg},${rg},255)`
+    let rg = 110 - (11 * ter.power)
+    divById(ter.id).style.fill = `rgb(${rg},${rg},150)`
   } else {
-    let blue = 140 - (7 * ter.power)
-    let green = blue + 30
-    divById(ter.id).style.fill = `rgb(255,${green},${blue})`
+    // let blue = 140 - (7 * ter.power)
+    // let green = blue + 30
+    let gb = 150 - (15 * ter.power)
+    divById(ter.id).style.fill = `rgb(255,${gb},${gb})`
   }
 }
 
@@ -192,7 +194,7 @@ function handleBoardClick(e) {
         toggleActive(ter)
       }
 
-    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id) && activeTerritory.power > 1) {
+    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id) && activeTerritory.power > 1 && gamePhase === "attack") {
       activeTerritory.attack(ter)
     }
 
@@ -205,7 +207,7 @@ function handlePowerClick(e) {
     if (e.target.textContent === "-" && activeTerritory.power > 1) {
       alterPower(activeTerritory, -1)
 
-    } else if (e.target.textContent === "+" && powerStore > 0) {
+    } else if (e.target.textContent === "+" && powerStore > 0 && activeTerritory.power < 10) {
       alterPower(activeTerritory, 1)
     }
 
