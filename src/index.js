@@ -3,6 +3,7 @@ let turn = 1
 let powerStore = 0
 let gameLog = []
 let scrollNum = 2
+let gamePhase = "deploy"
 let activeTerritory
 
 // retrieve page elements
@@ -153,7 +154,7 @@ function handleBoardClick(e) {
         toggleActive(ter)
       }
 
-    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id) && activeTerritory.power > 1) {
+    } else if (ter.player_id != turn && activeTerritory && activeTerritory.hasNeighborX(ter.id) && activeTerritory.power > 1 && gamePhase === "attack") {
       activeTerritory.attack(ter)
     }
 
