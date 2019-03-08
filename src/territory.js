@@ -84,6 +84,9 @@ function createTerritory() {
         // debugger
         document.querySelector(".modal-content").appendChild(h4)
         winModal().style.display = "block"
+        document.querySelector("#spacemutiny").pause()
+        // document.querySelector("audio").source = "./src/assets/rockapella.mp3"
+        document.querySelector("#rockapella").play()
       }
 
       result === 'win' ? setHudBox(targ, result, fadeImage) : setHudBox(this, result)

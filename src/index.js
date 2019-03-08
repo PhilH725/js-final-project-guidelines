@@ -39,6 +39,7 @@ function init() {
   window.addEventListener('click', function(e) {
     if (event.target == winModal()) {
       winModal().style.display = "none";
+      document.querySelector('#rockapella').pause()
     }
   })
 }
