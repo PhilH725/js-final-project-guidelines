@@ -123,6 +123,18 @@ body {
   text-align: center;
 }
 
+#adj-power {
+  margin: 5px;
+}
+
+#increase {
+  margin: 5px;
+}
+
+#decrease {
+  margin: 5px;
+}
+
 #troops-bar {
   margin-bottom: 20px;
   text-align: center;
