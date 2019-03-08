@@ -79,7 +79,7 @@ body {
 }
 
 #power-adjust-div {
-  margin-left: 25px;
+  /* margin-left: 25px; */
 }
 
 #hud-wrapper {
@@ -91,7 +91,7 @@ body {
   border-radius: 15px;
   width: 200px;
   height: 220px;
-  margin-left: 58px;
+  margin-left: 72px;
   background-color: RGB(252,251,233);
   position: relative;
 }

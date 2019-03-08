@@ -19,6 +19,7 @@ const log1 = () => document.querySelector('#log-1')
 const log2 = () => document.querySelector('#log-2')
 const scrollUp = () => document.querySelector('#scroll-up')
 const scrollDown = () => document.querySelector('#scroll-down')
+const phaseButton = () => document.querySelector('#phase-btn')
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', init)
 function init() {
   getTerritories()
   setTroopsBar()
-  endButton().addEventListener('click', endTurn)
+  // endButton().addEventListener('click', endTurn)
   board().addEventListener('click', handleBoardClick)
   hudBox().addEventListener('click', handlePowerClick)
   newGameButton().addEventListener('click', startNewGame)
@@ -34,6 +35,7 @@ function init() {
   scrollDown().addEventListener('click', handleScroll)
   document.querySelector('#up-icon').addEventListener('click', handleScroll)
   document.querySelector('#down-icon').addEventListener('click', handleScroll)
+  phaseButton().addEventListener('click', handlePhaseClick)
 }
 
 // fetch territories from db
@@ -223,6 +225,17 @@ function handleScroll(e) {
     if (scrollNum > 2) {
       displayGameLog(--scrollNum)
     }
+  }
+}
+
+function handlePhaseClick() {
+  if (gamePhase === "deploy") {
+    gamePhase = "attack"
+    phaseButton().textContent = "End turn"
+  } else {
+    gamePhase = "deploy"
+    phaseButton().textContent = "Begin attack phase"
+    endTurn()
   }
 }
 
