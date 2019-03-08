@@ -33,7 +33,7 @@ function init() {
   scrollDown().addEventListener('click', handleScroll)
   document.querySelector('#up-icon').addEventListener('click', handleScroll)
   document.querySelector('#down-icon').addEventListener('click', handleScroll)
-  phaseButton().addEventListener('click', handlePhaseClick)
+  phaseButton().addEventListener('click', changePhase)
 }
 
 // fetch territories from db
@@ -226,13 +226,15 @@ function handleScroll(e) {
   }
 }
 
-function handlePhaseClick() {
+function changePhase() {
   if (gamePhase === "deploy") {
     gamePhase = "attack"
     phaseButton().textContent = "End turn"
+    document.querySelector('#current-phase').textContent = "Phase: Attack!"
     document.querySelector('#power-adjust-wrapper').removeChild(document.querySelector('#power-adjust-div'))
   } else {
     gamePhase = "deploy"
+    document.querySelector('#current-phase').textContent = "Phase: Deploy Troops"
     phaseButton().textContent = "Begin attack phase"
     endTurn()
     addPowerAdjusters()
@@ -294,6 +296,13 @@ function startNewGame() {
 
   scrollNum = 2
   displayGameLog(2)
+
+  if (gamePhase = "attack") {
+    gamePhase = "deploy"
+    document.querySelector('#current-phase').textContent = "Phase: Deploy Troops"
+    phaseButton().textContent = "Begin attack phase"
+    addPowerAdjusters()
+  }
 }
 
 // Helpers
