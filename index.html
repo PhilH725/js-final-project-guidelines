@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row">
 
-          <div class="col-8" id="game-board">
+          <div class="col-8 box" id="game-board">
             <svg id="view-box" width="720px" height="540px" viewBox="0 0 1203 893" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="1">
                     <g id="map" transform="translate(1.000000, 1.000000)">
@@ -157,7 +157,7 @@
             </svg>
           </div>
 
-          <div class="col-4" id="hud-box">
+          <div class="col-4 box" id="hud-box">
             <div id="hud-wrapper">
               <div id="hud-title-div">
                 <h3 id="hud-title">Choose a territory</h3>
@@ -166,17 +166,14 @@
                 <svg id="hud-map" width="180px" height="180px" viewBox="0 0 180 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 </svg>
               </div>
+              <br>
               <div id="hud-power-tag">
-                <p id="hud-power-info">Power: ~</p>
+                <h5 id="hud-power-info">Power: ~</h5>
               </div>
               <div id="power-adjust-wrapper">
-                <!-- <div id=power-adjust-div>
-                  Adjust Power
-                  <button id='increase-btn'>+</button>
-                  <button id='decrease-button'>-</button>
-                </div> -->
               </div>
-              <div id="troops-bar">
+              <div id="troops-bar-div">
+                <h5 id="troops-bar"></h5>
               </div>
               <div id="battle-result-div">
                 <p id="battle-result"></p>
@@ -186,17 +183,17 @@
       </div>
 
     <div class="row">
-          <div class="col-12" id="option-bar">
-            <div id="new-game-div"><button id="new-game">Start New Game</button></div>
-            <audio controls>
-              <source src="./src/assets/rockapella.mp3" type="audio/mpeg">
+          <div class="col-12 box" id="option-bar">
+            <button class="vertical-center" id="new-game">Start New Game</button>
+            <audio controls class="vertical-center">
+              <source src="./src/assets/spacemutiny.mp3" type="audio/mpeg">
               Your browser does not support the audio tag.
             </audio>
           </div>
     </div>
 
       <div class="row">
-        <div class="col-8" id="text-box">
+        <div class="col-8 box" id="text-box">
           <div id="scroll-box">
             <button type="button" id="scroll-up"><i class="fas fa-angle-double-up" id="up-icon"></i></button>
             <br>
@@ -205,17 +202,25 @@
             <p id="log-2"></p>
             <p id="log-1"></p>
         </div>
-          <div class="col-4" id="phase-box">
+          <div class="col-4 box" id="phase-box">
             <h4 id="current-turn">Player 1's turn</h4>
-            <h5>Phase: Deploy Troops</h5>
+            <h5 id="current-phase">Phase: Deploy Troops</h5>
             <button type="button" id="phase-btn">Begin attack phase</button>
           </div>
       </div>
     </div>
 
+    <!-- The Modal -->
+    <div id="win-modal" class="modal">
 
+      <!-- Modal content -->
+      <div class="modal-content">
+        <!-- <span class="close">&times;</span> -->
+        <!-- <h4>Player 1 wins!</h4> -->
+      </div>
 
-  </div>
+    </div>
+
     <br>
 
 

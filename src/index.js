@@ -18,12 +18,14 @@ const log2 = () => document.querySelector('#log-2')
 const scrollUp = () => document.querySelector('#scroll-up')
 const scrollDown = () => document.querySelector('#scroll-down')
 const phaseButton = () => document.querySelector('#phase-btn')
+const winModal = () => document.querySelector("#win-modal")
 
 // initialize page when content loads
 document.addEventListener('DOMContentLoaded', init)
 
 function init() {
   getTerritories()
+  turnBorders(turn)
   setTroopsBar()
   board().addEventListener('click', handleBoardClick)
   addPowerAdjusters()
@@ -33,7 +35,12 @@ function init() {
   scrollDown().addEventListener('click', handleScroll)
   document.querySelector('#up-icon').addEventListener('click', handleScroll)
   document.querySelector('#down-icon').addEventListener('click', handleScroll)
-  phaseButton().addEventListener('click', handlePhaseClick)
+  phaseButton().addEventListener('click', changePhase)
+  window.addEventListener('click', function(e) {
+    if (event.target == winModal()) {
+      winModal().style.display = "none";
+    }
+  })
 }
 
 // fetch territories from db
@@ -179,6 +186,19 @@ function fillTerColor(ter) {
   }
 }
 
+function turnBorders(t) {
+  let boxes = document.getElementsByClassName("box")
+  if (turn === 2) {
+    for (i = 0; i < boxes.length; i++) {
+      boxes[i].style.border = "5px solid red";
+    }
+  } else {
+    for (i = 0; i < boxes.length; i++) {
+      boxes[i].style.border = "5px solid rgb(0,0,200)";
+    }
+  }
+}
+
 // Handle click events for territories and power increment buttons
 function handleBoardClick(e) {
 
@@ -227,13 +247,15 @@ function handleScroll(e) {
   }
 }
 
-function handlePhaseClick() {
+function changePhase() {
   if (gamePhase === "deploy") {
     gamePhase = "attack"
     phaseButton().textContent = "End turn"
-    document.querySelector('#power-adjust-wrapper').removeChild(document.querySelector('#power-adjust-div'))
+    document.querySelector('#current-phase').textContent = "Phase: Attack!"
+    clear(document.querySelector('#power-adjust-wrapper'))
   } else {
     gamePhase = "deploy"
+    document.querySelector('#current-phase').textContent = "Phase: Deploy Troops"
     phaseButton().textContent = "Begin attack phase"
     endTurn()
     addPowerAdjusters()
@@ -272,6 +294,7 @@ function endTurn() {
 
   turn === 1 ? turn = 2 : turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
+  turnBorders(turn)
 
   if (activeTerritory) {
     activeTerritory = null
@@ -292,9 +315,18 @@ function startNewGame() {
 
   turn = 1
   document.getElementById('current-turn').innerText = `Player ${turn}'s turn`
+  turnBorders(turn)
 
   scrollNum = 2
   displayGameLog(2)
+
+  if (gamePhase = "attack") {
+    clear(document.querySelector('#power-adjust-wrapper'))
+    gamePhase = "deploy"
+    document.querySelector('#current-phase').textContent = "Phase: Deploy Troops"
+    phaseButton().textContent = "Begin attack phase"
+    addPowerAdjusters()
+  }
 }
 
 // Helpers

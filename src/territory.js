@@ -55,9 +55,6 @@ function createTerritory() {
         fadeImage = divById(targ.id).cloneNode(true)
         fadeImage.id = 'minimap-image3'
         result = 'win'
-        if (Territory.playerTerritories(this.player_id) === 22) {
-          window.alert(`Player ${this.player_id} wins!`)
-        }
       } else if (att === def) {
         this.power = Math.ceil(this.power/2)
         targ.power = Math.ceil(targ.power/2)
@@ -79,6 +76,16 @@ function createTerritory() {
 
       defaultBorder(this.id)
       defaultBorder(targ.id)
+
+      if (Territory.playerTerritories(this.player_id) === 22) {
+        // window.alert(`Player ${this.player_id} wins!`)
+        let h4 = document.createElement('h4')
+        h4.textContent = `Player ${this.player_id} wins!`
+        // debugger
+        document.querySelector(".modal-content").appendChild(h4)
+        winModal().style.display = "block"
+      }
+
       result === 'win' ? setHudBox(targ, result, fadeImage) : setHudBox(this, result)
 
       scrollNum = 2
