@@ -109,22 +109,6 @@ function setHudBox(ter) {
   powerEl.innerText = `Power: ${ter.power}`
 }
 
-// function setTerritorySidebar(ter) {
-//   clear(activeBar())
-//
-//   p = document.createElement('p')
-//   p.textContent = `Adjust power in territory ${ter.id}: `
-//   activeBar().appendChild(p)
-//
-//   minusBtn = document.createElement('button')
-//   activeBar().appendChild(minusBtn)
-//   minusBtn.textContent = '-'
-//
-//   plusBtn = document.createElement('button')
-//   activeBar().appendChild(plusBtn)
-//   plusBtn.textContent = '+'
-// }
-
 // Style based on game state
 function defaultBorder(id) {
   divById(id).style.stroke = 'black'
@@ -143,12 +127,13 @@ function activeBorder(id) {
 
 function fillTerColor(ter) {
   if (ter.player_id === 1) {
-    let rg = 160 - (8 * ter.power)
-    divById(ter.id).style.fill = `rgb(${rg},${rg},255)`
+    let rg = 110 - (11 * ter.power)
+    divById(ter.id).style.fill = `rgb(${rg},${rg},150)`
   } else {
-    let blue = 140 - (7 * ter.power)
-    let green = blue + 30
-    divById(ter.id).style.fill = `rgb(255,${green},${blue})`
+    // let blue = 140 - (7 * ter.power)
+    // let green = blue + 30
+    let gb = 150 - (15 * ter.power)
+    divById(ter.id).style.fill = `rgb(255,${gb},${gb})`
   }
 }
 
@@ -181,7 +166,7 @@ function handlePowerClick(e) {
     if (e.target.textContent === "-" && activeTerritory.power > 1) {
       alterPower(activeTerritory, -1)
 
-    } else if (e.target.textContent === "+" && powerStore > 0) {
+    } else if (e.target.textContent === "+" && powerStore > 0 && activeTerritory.power < 10) {
       alterPower(activeTerritory, 1)
     }
 

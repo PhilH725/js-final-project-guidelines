@@ -47,21 +47,21 @@ function createTerritory() {
 
       if (att > def) {
         targ.player_id = this.player_id
-        targ.power = this.power - Math.round((def/att)*this.power)
+        targ.power = this.power - Math.floor((def/att)*this.power)
         this.power = 1
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name} and was successful! (Score: ${att} to ${def})`)
         if (Territory.playerTerritories(this.player_id) === 22) {
           window.alert(`Player ${this.player_id} wins!`)
         }
       } else if (att === def) {
-        this.power = Math.floor(this.power/2)
-        targ.power = Math.floor(targ.power/2)
+        this.power = Math.ceil(this.power/2)
+        targ.power = Math.ceil(targ.power/2)
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
 
       } else {
         gameLog.push(`Player ${this.player_id} attacked ${targ.name} from ${this.name}, but ${targ.name}'s troops defended their territory! (Score: ${att} to ${def})`)
         this.power = 1
-        targ.power = targ.power - Math.round((att/def)*targ.power)
+        targ.power = targ.power - Math.floor((att/def)*targ.power)
       }
 
       activeTerritory.neighbors.forEach(n => defaultBorder(n.base_id))
